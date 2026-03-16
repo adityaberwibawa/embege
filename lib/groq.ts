@@ -40,7 +40,7 @@ export async function generateFlashcards(
 ): Promise<Array<{ question: string; answer: string }>> {
   const truncated = content.slice(0, 6000);
   const res = await groq.chat.completions.create({
-    model: "llama3-8b-8192",
+    model: "llama-3.1-8b-instant",
     messages: [
       {
         role: "system",
