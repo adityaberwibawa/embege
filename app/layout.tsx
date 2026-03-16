@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NoteGenius — AI Lecture Notes Organizer",
+  title: "EMBEGE — AI Lecture Notes Organizer",
   description: "Ubah catatan kuliahmu jadi materi belajar yang lebih cerdas",
 };
 

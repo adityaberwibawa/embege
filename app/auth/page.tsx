@@ -67,7 +67,7 @@ export default function AuthPage() {
             </div>
           ))}
         </div>
-        <p style={{ color:"rgba(255,255,255,.3)", fontSize:12 }}>© 2025 NoteGenius</p>
+        <p style={{ color:"rgba(255,255,255,.3)", fontSize:12 }}>© 2025 EMBEGE</p>
       </div>
 
       {/* Right panel - form */}
@@ -82,7 +82,7 @@ export default function AuthPage() {
               {isLogin ? "Selamat datang kembali" : "Mulai belajar lebih cerdas"}
             </h2>
             <p style={{ color:"var(--muted)", fontSize:14 }}>
-              {isLogin ? "Masuk ke akun NoteGenius kamu" : "Buat akun gratis sekarang"}
+              {isLogin ? "Masuk ke akun EMBEGE kamu" : "Buat akun gratis sekarang"}
             </p>
           </div>
 
