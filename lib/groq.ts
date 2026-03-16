@@ -6,7 +6,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 export async function summarizeNotes(content: string): Promise<string> {
   const truncated = content.slice(0, 8000); // Groq context limit safety
   const res = await groq.chat.completions.create({
-    model: "llama-3.1-8b-instant",
+    model: "moonshotai/kimi-k2-instruct-0905",
     messages: [
       {
         role: "system",
@@ -40,7 +40,7 @@ export async function generateFlashcards(
 ): Promise<Array<{ question: string; answer: string }>> {
   const truncated = content.slice(0, 6000);
   const res = await groq.chat.completions.create({
-    model: "llama-3.1-8b-instant",
+    model: "moonshotai/kimi-k2-instruct-0905",
     messages: [
       {
         role: "system",
