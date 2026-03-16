@@ -2,8 +2,8 @@ import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// Model Groq yang sangat cepat dan handal
-const MODEL_NAME = "llama-3.3-70b-versatile";
+// Model Groq yang SANGAT CEPAT — 8B parameter, latensi rendah
+const MODEL_NAME = "llama-3.1-8b-instant";
 
 // Summarize lecture notes
 export async function summarizeNotes(content: string): Promise<string> {

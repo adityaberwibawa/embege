@@ -23,11 +23,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No content extracted" }, { status: 422 });
     }
 
-    // 3. AI: Summarize
-    const summary = await summarizeNotes(content);
-
-    // 4. AI: Generate flashcards
-    const rawCards = await generateFlashcards(content);
+    // 3 & 4. AI: Summarize + Generate flashcards SECARA PARALEL (jauh lebih cepat!)
+    const [summary, rawCards] = await Promise.all([
+      summarizeNotes(content),
+      generateFlashcards(content),
+    ]);
 
     // 5. Update note
     await supabaseAdmin.from("notes").update({
