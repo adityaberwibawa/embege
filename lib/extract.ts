@@ -5,6 +5,7 @@ export async function extractText(buffer: Buffer, fileType: string): Promise<str
       return buffer.toString("utf-8");
 
     case "pdf": {
+      // @ts-ignore
       const pdfParse = (await import("pdf-parse")).default;
       const data = await pdfParse(buffer);
       return data.text;
