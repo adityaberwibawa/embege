@@ -15,11 +15,11 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
   return (
     <aside className="sidebar">
       {/* Logo */}
-      <div style={{ paddingBottom: 20, borderBottom: "1px solid rgba(255,255,255,.1)", marginBottom: 12 }}>
+      <div style={{ paddingBottom: 20, borderBottom: "1px solid rgba(64,138,113,.3)", marginBottom: 12 }}>
         <h1 style={{ fontFamily: "var(--serif)", fontSize: 20, fontWeight: 700, color: "#fff" }}>
-          EMB<span style={{ color: "var(--amber)" }}>EGE</span>
+          EMB<span style={{ color: "#B0E4CC" }}>EGE</span>
         </h1>
-        <p style={{ fontSize: 11, color: "rgba(255,255,255,.35)", marginTop: 2 }}>AI Lecture Notes</p>
+        <p style={{ fontSize: 11, color: "rgba(176,228,204,.4)", marginTop: 2 }}>AI Lecture Notes</p>
       </div>
 
       {/* Nav */}
@@ -29,7 +29,7 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
 
       {/* Courses */}
       <div style={{ marginTop: 16, marginBottom: 6 }}>
-        <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,.3)", letterSpacing: ".1em", paddingLeft: 12, marginBottom: 8 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(176,228,204,.3)", letterSpacing: ".1em", paddingLeft: 12, marginBottom: 8 }}>
           MATA KULIAH
         </p>
         {courses.map(c => (
