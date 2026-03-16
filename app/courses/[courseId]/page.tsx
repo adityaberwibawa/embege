@@ -76,14 +76,11 @@ export default function CoursePage() {
   async function processNote(note: Note) {
     setProcessing(p=>[...p, note.id]);
 
-    // Update status to processing
-    await supabase.from("notes").update({ status:"processing" }).eq("id", note.id);
-    await fetchData(userId);
-
     // Get session token for API call
     const {data:{session}} = await supabase.auth.getSession();
 
-    const res = await fetch("/api/ai/process", {
+    // Fire-and-forget: API langsung response, proses AI jalan di background
+    fetch("/api/ai/process", {
       method: "POST",
       headers: {
         "Content-Type":"application/json",
@@ -92,12 +89,15 @@ export default function CoursePage() {
       body: JSON.stringify({ noteId: note.id, fileUrl: note.file_url, fileType: note.file_type }),
     });
 
-    if (!res.ok) {
-      await supabase.from("notes").update({ status:"error" }).eq("id", note.id);
-    }
-
-    setProcessing(p=>p.filter(i=>i!==note.id));
-    await fetchData(userId);
+    // Polling: cek status setiap 2 detik sampai selesai
+    const poll = setInterval(async () => {
+      const { data } = await supabase.from("notes").select("status").eq("id", note.id).single();
+      if (data && (data.status === "done" || data.status === "error")) {
+        clearInterval(poll);
+        setProcessing(p=>p.filter(i=>i!==note.id));
+        await fetchData(userId);
+      }
+    }, 2000);
   }
 
   async function deleteNote(id: string) {
