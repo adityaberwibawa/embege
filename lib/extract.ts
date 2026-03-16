@@ -1,33 +1,30 @@
-// Extract plain text from uploaded files
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function extractText(buffer: Buffer, fileType: string): Promise<string> {
   switch (fileType.toLowerCase()) {
     case "txt":
       return buffer.toString("utf-8");
 
     case "pdf": {
-      // @ts-ignore
-      const pdfParse = (await import("pdf-parse")).default;
-      const data = await pdfParse(buffer);
-      return data.text;
+      const raw = buffer.toString("latin1");
+      const matches = raw.match(/\(([^)]{2,200})\)/g) || [];
+      const text = matches
+        .map((m: string) => m.slice(1, -1))
+        .filter((t: string) => /[a-zA-Z]{2,}/.test(t))
+        .join(" ")
+        .replace(/\\n/g, "\n")
+        .replace(/\\/g, "");
+      return text || buffer.toString("utf-8").replace(/[^\x20-\x7E\n]/g, " ");
     }
 
     case "docx": {
-      const mammoth = await import("mammoth");
+      const mammoth = await import("mammoth") as any;
       const result = await mammoth.extractRawText({ buffer });
       return result.value;
     }
 
     case "pptx": {
-      // Basic PPTX text extraction via XML parsing
-      const { unzipSync } = await import("zlib");
-      try {
-        // Read PPTX as zip, extract slide XMLs
-        const text = buffer.toString("utf-8");
-        // Strip XML tags for basic extraction
-        return text.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-      } catch {
-        return "Konten PPTX tidak dapat diekstrak sepenuhnya.";
-      }
+      const text = buffer.toString("utf-8");
+      return text.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
     }
 
     default:
