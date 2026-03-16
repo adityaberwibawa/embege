@@ -6,7 +6,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 export async function summarizeNotes(content: string): Promise<string> {
   const truncated = content.slice(0, 8000); // Groq context limit safety
   const res = await groq.chat.completions.create({
-    model: "openai/gpt-oss-120b",
+    model: "llama-3.1-8b-instant",
     messages: [
       {
         role: "system",
