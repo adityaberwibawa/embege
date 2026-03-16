@@ -50,7 +50,7 @@ export default function AuthPage() {
         }} />
         <div>
           <h1 style={{ fontFamily:"var(--serif)", fontSize:32, fontWeight:700, color:"#fff", marginBottom:8 }}>
-            Note<span style={{ color:"var(--amber)" }}>Genius</span>
+            EMB<span style={{ color:"var(--amber)" }}>EGE</span>
           </h1>
           <p style={{ color:"rgba(255,255,255,.5)", fontSize:14 }}>AI Lecture Notes Organizer</p>
         </div>
