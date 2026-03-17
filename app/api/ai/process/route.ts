@@ -10,10 +10,19 @@ async function processInBackground(noteId: string, userId: string, fileUrl: stri
   const start = Date.now();
   try {
     // 1. Download file from Supabase Storage
-    console.log(`[AI] Downloading file...`);
+    console.log(`[AI] Downloading file from URL: ${fileUrl}`);
     const urlParts = fileUrl.split("/storage/v1/object/public/notes/");
+    console.log(`[AI] URL parts:`, urlParts);
     const filePath = urlParts[1];
-    const { data: fileData, error: fileError } = await supabaseAdmin.storage.from("notes").download(filePath);
+    console.log(`[AI] File path:`, filePath);
+
+    if (!filePath) throw new Error("Invalid file URL format: " + fileUrl);
+
+    const { data: fileData, error: fileError } = await supabaseAdmin
+      .storage.from("notes")
+      .download(filePath);
+
+    console.log(`[AI] Download result - error:`, fileError, `data:`, !!fileData);
     if (fileError || !fileData) throw new Error("Failed to download: " + fileError?.message);
     const buffer = Buffer.from(await fileData.arrayBuffer());
 
