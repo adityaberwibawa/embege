@@ -34,15 +34,15 @@ export default function AuthPage() {
 
   return (
     <main style={{
-      minHeight:"100vh", background:"var(--bg)",
-      display:"flex", alignItems:"stretch",
+      minHeight: "100vh", background: "var(--bg)",
+      display: "flex", flexDirection: "row", alignItems: "stretch",
     }}>
       {/* Left panel - decorative */}
-      <div style={{
-        flex:1, background:"var(--navy)", padding:"60px 48px",
-        display:"flex", flexDirection:"column", justifyContent:"space-between",
-        position:"relative", overflow:"hidden",
-      }} className="hidden md:flex">
+      <div className="auth-left-panel" style={{
+        flex: 1, background: "var(--navy)", padding: "60px 48px",
+        display: "flex", flexDirection: "column", justifyContent: "space-between",
+        position: "relative", overflow: "hidden",
+      }}>
         <div style={{
           position:"absolute", bottom:-120, right:-120,
           width:400, height:400, borderRadius:"50%",
@@ -71,12 +71,12 @@ export default function AuthPage() {
       </div>
 
       {/* Right panel - form */}
-      <div style={{
-        width:"100%", maxWidth:480,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        padding:"40px 32px",
+      <div className="auth-right-panel" style={{
+        width: "100%", maxWidth: 480,
+        display: "flex", flex: 1, alignItems: "center", justifyContent: "center",
+        padding: "40px 32px", margin: "0 auto"
       }}>
-        <div className="fade" style={{ width:"100%" }}>
+        <div className="fade" style={{ width: "100%", maxWidth: 400 }}>
           <div style={{ marginBottom:36 }}>
             <h2 style={{ fontFamily:"var(--serif)", fontSize:28, fontWeight:700, marginBottom:6 }}>
               {isLogin ? "Selamat datang kembali" : "Mulai belajar lebih cerdas"}

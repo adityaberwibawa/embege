@@ -154,6 +154,19 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   margin-bottom: 32px;
 }
 
+/* Auth Layout */
+.auth-left-panel {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .auth-left-panel {
+    display: flex !important;
+  }
+}
+.auth-right-panel {
+  flex: 1;
+}
+
 /* Flashcard flip */
 .flashcard-scene { perspective: 1000px; }
 .flashcard-card  { position: relative; width: 100%; transform-style: preserve-3d; transition: transform .5s ease; cursor: pointer; }
