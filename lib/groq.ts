@@ -1,77 +1,64 @@
 import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const MODEL = "llama-3.1-8b-instant";
 
-// Model Groq yang SANGAT CEPAT — 8B parameter, latensi rendah
-const MODEL_NAME = "llama-3.1-8b-instant";
-
-// Summarize lecture notes
 export async function summarizeNotes(content: string): Promise<string> {
   try {
-    // Llama 3 memiliki konteks yang jauh lebih besar (128k tokens), kita tingkatkan limitnya
-    const truncated = content.slice(0, 30000); 
+    const truncated = content.slice(0, 3000);
     const res = await groq.chat.completions.create({
-      model: MODEL_NAME,
+      model: MODEL,
       messages: [
         {
           role: "system",
-          content: `Kamu adalah asisten akademik yang membantu mahasiswa. 
-Buat ringkasan terstruktur dari catatan kuliah berikut dalam Bahasa Indonesia.
-Format output:
+          content: `Kamu adalah asisten akademik. Buat ringkasan terstruktur dalam Bahasa Indonesia.
+Format:
 ## 📌 Ringkasan Utama
-[2-3 kalimat inti]
+[2-3 kalimat]
 
 ## 🔑 Poin-Poin Kunci
 - [poin 1]
 - [poin 2]
-- [dst...]
 
 ## 💡 Konsep Penting
-[Jelaskan 2-3 konsep terpenting]
+[2-3 konsep]
 
 ## 📝 Kesimpulan
-[1 paragraf penutup]`,
+[1 paragraf]`,
         },
-        { role: "user", content: `Catatan kuliah:\n\n${truncated}` },
+        { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      temperature: 0.5,
-      max_tokens: 1500,
+      max_tokens: 600,
     });
     return res.choices[0].message.content || "";
   } catch (error) {
-    console.error("Gagal meringkas catatan:", error);
-    return "Maaf, terjadi kesalahan saat mencoba meringkas catatan kuliah.";
+    console.error("Gagal meringkas:", error);
+    return "Gagal membuat ringkasan.";
   }
 }
 
-// Generate flashcards from notes
 export async function generateFlashcards(
   content: string
 ): Promise<Array<{ question: string; answer: string }>> {
   try {
-    const truncated = content.slice(0, 30000);
+    const truncated = content.slice(0, 2000);
     const res = await groq.chat.completions.create({
-      model: MODEL_NAME,
-      response_format: { type: "json_object" },
-      temperature: 0.3,
+      model: MODEL,
       messages: [
         {
           role: "system",
-          content: `Buat 8-12 flashcard dari catatan kuliah. 
-PENTING: Keluarkan HANYA output dalam format JSON object. 
-Format yang harus digunakan: {"flashcards": [{"question": "...", "answer": "..."}, ...]}
-Pertanyaan harus spesifik dan informatif. Jawaban singkat namun lengkap.`,
+          content: `Buat 5 flashcard. Balas HANYA JSON array tanpa teks lain.
+Format: [{"question":"...","answer":"..."}]`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      max_tokens: 1500,
+      max_tokens: 600,
     });
-
-    const raw = res.choices[0].message.content || '{"flashcards": []}';
-    const parsed = JSON.parse(raw);
-    return parsed.flashcards || [];
+    const raw = res.choices[0].message.content || "[]";
+    const clean = raw.replace(/```json|```/g, "").trim();
+    return JSON.parse(clean);
   } catch (error) {
-    console.error("Gagal membuat flashcards:", error);
+    console.error("Gagal flashcards:", error);
     return [];
   }
 }
