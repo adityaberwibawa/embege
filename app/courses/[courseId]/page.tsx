@@ -8,31 +8,31 @@ import Sidebar from "@/components/Sidebar";
 const ACCEPTED = ".pdf,.docx,.txt,.pptx";
 
 export default function CoursePage() {
-  const router   = useRouter();
+  const router = useRouter();
   const { courseId } = useParams<{ courseId: string }>();
-  const fileRef  = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
-  const [courses, setCourses]   = useState<Course[]>([]);
-  const [course, setCourse]     = useState<Course | null>(null);
-  const [notes, setNotes]       = useState<Note[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState("");
   const [processing, setProcessing] = useState<string[]>([]);
-  const [userId, setUserId]     = useState("");
+  const [userId, setUserId] = useState("");
 
-  useEffect(()=>{
-    supabase.auth.getSession().then(({data})=>{
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
       if (!data.session) { router.push("/auth"); return; }
       setUserId(data.session.user.id);
       fetchData(data.session.user.id);
     });
-  },[courseId]);
+  }, [courseId]);
 
   async function fetchData(uid: string) {
-    const [{data:allCourses},{data:c},{data:n}] = await Promise.all([
-      supabase.from("courses").select("*").eq("user_id",uid).order("created_at",{ascending:false}),
-      supabase.from("courses").select("*").eq("id",courseId).single(),
-      supabase.from("notes").select("*").eq("course_id",courseId).order("created_at",{ascending:false}),
+    const [{ data: allCourses }, { data: c }, { data: n }] = await Promise.all([
+      supabase.from("courses").select("*").eq("user_id", uid).order("created_at", { ascending: false }),
+      supabase.from("courses").select("*").eq("id", courseId).single(),
+      supabase.from("notes").select("*").eq("course_id", courseId).order("created_at", { ascending: false }),
     ]);
     if (allCourses) setCourses(allCourses);
     if (c) setCourse(c);
@@ -44,24 +44,22 @@ export default function CoursePage() {
     if (!file) return;
     setUploading(true); setUploadMsg("Mengunggah file...");
 
-    const ext  = file.name.split(".").pop()?.toLowerCase() || "txt";
+    const ext = file.name.split(".").pop()?.toLowerCase() || "txt";
     const path = `${userId}/${courseId}/${Date.now()}_${file.name}`;
 
-    // Upload to Supabase Storage
     const { error: storageErr } = await supabase.storage.from("notes").upload(path, file);
     if (storageErr) { setUploadMsg("Gagal upload: " + storageErr.message); setUploading(false); return; }
 
     const { data: urlData } = supabase.storage.from("notes").getPublicUrl(path);
 
-    // Create note record
     const { data: note, error: noteErr } = await supabase.from("notes").insert({
       course_id: courseId,
-      user_id:   userId,
-      title:     file.name.replace(/\.[^.]+$/, ""),
-      file_url:  urlData.publicUrl,
+      user_id: userId,
+      title: file.name.replace(/\.[^.]+$/, ""),
+      file_url: urlData.publicUrl,
       file_name: file.name,
       file_type: ext,
-      status:    "pending",
+      status: "pending",
     }).select().single();
 
     if (noteErr || !note) { setUploadMsg("Gagal menyimpan catatan."); setUploading(false); return; }
@@ -70,31 +68,28 @@ export default function CoursePage() {
     await fetchData(userId);
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
-    setTimeout(()=>setUploadMsg(""), 3000);
+    setTimeout(() => setUploadMsg(""), 3000);
   }
 
   async function processNote(note: Note) {
-    setProcessing(p=>[...p, note.id]);
+    setProcessing(p => [...p, note.id]);
 
-    // Get session token for API call
-    const {data:{session}} = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
 
-    // Fire-and-forget: API langsung response, proses AI jalan di background
     fetch("/api/ai/process", {
       method: "POST",
       headers: {
-        "Content-Type":"application/json",
-        "Authorization":`Bearer ${session!.access_token}`,
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${session!.access_token}`,
       },
       body: JSON.stringify({ noteId: note.id, fileUrl: note.file_url, fileType: note.file_type }),
     });
 
-    // Polling: cek status setiap 2 detik sampai selesai
     const poll = setInterval(async () => {
       const { data } = await supabase.from("notes").select("status").eq("id", note.id).single();
       if (data && (data.status === "done" || data.status === "error")) {
         clearInterval(poll);
-        setProcessing(p=>p.filter(i=>i!==note.id));
+        setProcessing(p => p.filter(i => i !== note.id));
         await fetchData(userId);
       }
     }, 2000);
@@ -107,8 +102,8 @@ export default function CoursePage() {
   }
 
   const statusBadge = (s: string) => {
-    const map: Record<string,string> = { done:"✅ Selesai", processing:"⏳ Memproses...", pending:"📥 Belum diproses", error:"❌ Error" };
-    return <span className={`badge badge-${s}`}>{map[s]||s}</span>;
+    const map: Record<string, string> = { done: "✅ Selesai", processing: "⏳ Memproses...", pending: "📥 Belum diproses", error: "❌ Error" };
+    return <span className={`badge badge-${s}`}>{map[s] || s}</span>;
   };
 
   return (
@@ -116,84 +111,98 @@ export default function CoursePage() {
       <Sidebar courses={courses} activeCourseId={courseId} />
 
       <main className="main-content">
-        {/* Header */}
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:28, flexWrap:"wrap", gap:16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
           <div>
-            <button onClick={()=>router.push("/dashboard")} style={{ background:"none", border:"none", cursor:"pointer", color:"var(--muted)", fontSize:13, marginBottom:8, display:"flex", alignItems:"center", gap:6 }}>
+            <button onClick={() => router.push("/dashboard")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted)", fontSize: 13, marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
               ← Dashboard
             </button>
-            <h2 style={{ fontFamily:"var(--serif)", fontSize:26, fontWeight:700, display:"flex", alignItems:"center", gap:10 }}>
-              <span style={{ fontSize:28 }}>{course?.emoji}</span>
+            <h2 style={{ fontFamily: "var(--serif)", fontSize: 26, fontWeight: 700, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 28 }}>{course?.emoji}</span>
               {course?.course_name}
             </h2>
-            <p style={{ fontSize:13, color:"var(--muted)", marginTop:4 }}>{notes.length} catatan diunggah</p>
+            <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{notes.length} catatan diunggah</p>
           </div>
-          <label style={{ cursor:"pointer" }}>
-            <input ref={fileRef} type="file" accept={ACCEPTED} onChange={handleUpload} style={{ display:"none" }} />
-            <span className="btn btn-navy" style={{ pointerEvents:"none" }}>
+          <label style={{ cursor: "pointer" }}>
+            <input ref={fileRef} type="file" accept={ACCEPTED} onChange={handleUpload} style={{ display: "none" }} />
+            <span className="btn btn-navy" style={{ pointerEvents: "none" }}>
               {uploading ? "⏳ Mengunggah..." : "⬆️ Upload Catatan"}
             </span>
           </label>
         </div>
 
         {uploadMsg && (
-          <div style={{ padding:"10px 16px", borderRadius:8, marginBottom:20, fontSize:13,
-            background:"rgba(74,124,89,.1)", color:"var(--sage)", border:"1px solid rgba(74,124,89,.2)" }}>
+          <div style={{
+            padding: "10px 16px", borderRadius: 8, marginBottom: 20, fontSize: 13,
+            background: "rgba(74,124,89,.1)", color: "var(--sage)", border: "1px solid rgba(74,124,89,.2)"
+          }}>
             {uploadMsg}
           </div>
         )}
 
-        <p style={{ fontSize:11, color:"var(--muted)", marginBottom:16, letterSpacing:".06em", fontWeight:600 }}>
-          SUPPORT FORMAT: PDF · DOCX · TXT · PPTX
-        </p>
+        {/* ✅ OPSI C — Peringatan format file */}
+        <div style={{ marginBottom: 16, padding: "10px 14px", background: "rgba(232,144,10,.08)", borderRadius: 8, border: "1px solid rgba(232,144,10,.2)" }}>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "var(--amber)", marginBottom: 4 }}>
+            📋 FORMAT YANG DIDUKUNG: PDF · DOCX · TXT · PPTX
+          </p>
+          <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
+            ⚠️ PDF harus bisa di-select teksnya (bukan hasil scan/foto). Untuk hasil terbaik gunakan <strong>TXT</strong> atau <strong>DOCX</strong>.
+            PDF scan? Convert dulu via{" "}
+            <a href="https://drive.google.com" target="_blank" style={{ color: "var(--amber)" }}>Google Drive</a>
+            {" "}→ buka dengan Google Docs → File → Download → DOCX.
+          </p>
+        </div>
 
-        {/* Notes list */}
         {notes.length === 0 ? (
-          <div style={{ textAlign:"center", padding:"60px 0", color:"var(--muted)" }}>
-            <p style={{ fontSize:48, marginBottom:12 }}>📄</p>
-            <p style={{ fontSize:16, fontWeight:600, marginBottom:4 }}>Belum ada catatan</p>
-            <p style={{ fontSize:14 }}>Upload file catatan kuliah untuk memulai</p>
+          <div style={{ textAlign: "center", padding: "60px 0", color: "var(--muted)" }}>
+            <p style={{ fontSize: 48, marginBottom: 12 }}>📄</p>
+            <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 4 }}>Belum ada catatan</p>
+            <p style={{ fontSize: 14 }}>Upload file catatan kuliah untuk memulai</p>
           </div>
         ) : (
-          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {notes.map((note, i) => (
               <div key={note.id} className="card fade" style={{
-                animationDelay:`${i*.05}s`, opacity:0,
-                display:"flex", alignItems:"center", gap:16,
+                animationDelay: `${i * .05}s`, opacity: 0,
+                display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
               }}>
-                {/* Icon */}
                 <div style={{
-                  width:44, height:44, borderRadius:10, flexShrink:0,
-                  background:`${course?.color}18`,
-                  display:"flex", alignItems:"center", justifyContent:"center", fontSize:22,
+                  width: 44, height: 44, borderRadius: 10, flexShrink: 0,
+                  background: `${course?.color}18`,
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
                 }}>
-                  {note.file_type==="pdf"?"📕" : note.file_type==="docx"?"📘" : note.file_type==="pptx"?"📊":"📝"}
+                  {note.file_type === "pdf" ? "📕" : note.file_type === "docx" ? "📘" : note.file_type === "pptx" ? "📊" : "📝"}
                 </div>
 
-                <div style={{ flex:1, minWidth:0 }}>
-                  <p style={{ fontWeight:600, fontSize:15, marginBottom:4 }}>{note.title}</p>
-                  <div style={{ display:"flex", gap:10, alignItems:"center" }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>{note.title}</p>
+                  <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                     {statusBadge(note.status)}
-                    <span style={{ fontSize:11, color:"var(--muted)" }}>{note.file_type?.toUpperCase()} · {note.file_name}</span>
+                    <span style={{ fontSize: 11, color: "var(--muted)" }}>{note.file_type?.toUpperCase()} · {note.file_name}</span>
                   </div>
+                  {/* ✅ OPSI B — Pesan error spesifik */}
+                  {note.status === "error" && (
+                    <p style={{ fontSize: 12, color: "var(--red)", marginTop: 6 }}>
+                      ⚠️ Gagal diproses. PDF mungkin hasil scan atau terproteksi. Coba convert ke DOCX/TXT dulu.
+                    </p>
+                  )}
                 </div>
 
-                <div style={{ display:"flex", gap:8 }}>
+                <div style={{ display: "flex", gap: 8 }}>
                   {(note.status === "pending" || note.status === "error") && (
-                    <button className="btn btn-amber" onClick={()=>processNote(note)}
+                    <button className="btn btn-amber" onClick={() => processNote(note)}
                       disabled={processing.includes(note.id)}
-                      style={{ padding:"8px 14px", fontSize:12 }}>
+                      style={{ padding: "8px 14px", fontSize: 12 }}>
                       {processing.includes(note.id) ? "⏳ Proses..." : "✨ Proses AI"}
                     </button>
                   )}
                   {note.status === "done" && (
-                    <button className="btn btn-outline" onClick={()=>router.push(`/notes/${note.id}`)}
-                      style={{ padding:"8px 14px", fontSize:12 }}>
+                    <button className="btn btn-outline" onClick={() => router.push(`/notes/${note.id}`)}
+                      style={{ padding: "8px 14px", fontSize: 12 }}>
                       📖 Lihat →
                     </button>
                   )}
-                  <button className="btn btn-ghost" onClick={()=>deleteNote(note.id)}
-                    style={{ padding:"8px 12px", fontSize:12 }}>✕</button>
+                  <button className="btn btn-ghost" onClick={() => deleteNote(note.id)}
+                    style={{ padding: "8px 12px", fontSize: 12 }}>✕</button>
                 </div>
               </div>
             ))}
