@@ -1,3 +1,5 @@
+export const maxDuration = 120; // seconds
+
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin, getUserFromRequest } from "@/lib/supabase-server";
 import { summarizeNotes, generateFlashcards } from "@/lib/groq";
