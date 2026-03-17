@@ -10,7 +10,7 @@ export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
-  const [showMobileForm, setShowMobileForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const router = useRouter();
 
   async function handle() {
@@ -39,9 +39,9 @@ export default function AuthPage() {
       display: "flex", flexDirection: "row", alignItems: "stretch",
     }}>
       {/* Left panel - decorative */}
-      <div className={`auth-left-panel ${showMobileForm ? "hidden-on-mobile" : ""}`} style={{
+      <div className="fade" style={{
         flex: 1, background: "var(--navy)", padding: "60px 48px",
-        flexDirection: "column", justifyContent: "space-between",
+        display: showForm ? "none" : "flex", flexDirection: "column", justifyContent: "space-between",
         position: "relative", overflow: "hidden",
       }}>
         <div style={{
@@ -70,22 +70,22 @@ export default function AuthPage() {
         </div>
         <div style={{ position: "relative", zIndex: 10 }}>
           <p style={{ color:"rgba(255,255,255,.3)", fontSize:12, marginBottom:16 }}>© 2025 EMBEGE</p>
-          <button className="btn btn-amber mobile-only-btn" onClick={() => setShowMobileForm(true)}
-            style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 16 }}>
+          <button className="btn btn-amber" onClick={() => setShowForm(true)}
+            style={{ width: "100%", maxWidth: 320, justifyContent: "center", padding: "14px", fontSize: 16 }}>
             Mulai Belajar →
           </button>
         </div>
       </div>
 
       {/* Right panel - form */}
-      <div className={`auth-right-panel ${!showMobileForm ? "hidden-on-mobile" : ""}`} style={{
+      <div style={{
         width: "100%", maxWidth: 480,
-        display: "flex", flex: 1, alignItems: "center", justifyContent: "center",
+        display: !showForm ? "none" : "flex", flex: 1, alignItems: "center", justifyContent: "center",
         padding: "40px 32px", margin: "0 auto"
       }}>
         <div className="fade" style={{ width: "100%", maxWidth: 400 }}>
-          {/* Mobile Back Button */}
-          <button className="mobile-only-btn" onClick={() => setShowMobileForm(false)}
+          {/* Back Button */}
+          <button onClick={() => setShowForm(false)}
             style={{ background: "none", border: "none", color: "var(--amber)", fontSize: 13, display: "flex", alignItems: "center", gap: 6, marginBottom: 24, cursor: "pointer", padding: 0, fontWeight: 700 }}>
             ← Kembali ke Info
           </button>
