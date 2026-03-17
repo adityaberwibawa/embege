@@ -18,9 +18,7 @@ async function processInBackground(noteId: string, userId: string, fileUrl: stri
 
     if (!filePath) throw new Error("Invalid file URL format: " + fileUrl);
 
-    const { data: fileData, error: fileError } = await supabaseAdmin
-      .storage.from("notes")
-      .download(filePath);
+    const { data: fileData, error: fileError } = await supabaseAdmin.storage.from("notes").download(filePath);
 
     console.log(`[AI] Download result - error:`, fileError, `data:`, !!fileData);
     if (fileError || !fileData) throw new Error("Failed to download: " + fileError?.message);
