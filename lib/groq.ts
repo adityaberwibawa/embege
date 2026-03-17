@@ -55,8 +55,9 @@ Format: [{"question":"...","answer":"..."}]`,
       max_tokens: 600,
     });
     const raw = res.choices[0].message.content || "[]";
-    const clean = raw.replace(/```json|```/g, "").trim();
-    return JSON.parse(clean);
+    const match = raw.match(/\[[\s\S]*\]/);
+    if (!match) return [];
+    return JSON.parse(match[0]);
   } catch (error) {
     console.error("Gagal flashcards:", error);
     return [];
