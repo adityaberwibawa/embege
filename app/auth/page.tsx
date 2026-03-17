@@ -10,6 +10,7 @@ export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [showMobileForm, setShowMobileForm] = useState(false);
   const router = useRouter();
 
   async function handle() {
@@ -38,9 +39,9 @@ export default function AuthPage() {
       display: "flex", flexDirection: "row", alignItems: "stretch",
     }}>
       {/* Left panel - decorative */}
-      <div className="auth-left-panel" style={{
+      <div className={`auth-left-panel ${showMobileForm ? "hidden-on-mobile" : ""}`} style={{
         flex: 1, background: "var(--navy)", padding: "60px 48px",
-        display: "flex", flexDirection: "column", justifyContent: "space-between",
+        flexDirection: "column", justifyContent: "space-between",
         position: "relative", overflow: "hidden",
       }}>
         <div style={{
@@ -67,16 +68,28 @@ export default function AuthPage() {
             </div>
           ))}
         </div>
-        <p style={{ color:"rgba(255,255,255,.3)", fontSize:12 }}>© 2025 EMBEGE</p>
+        <div style={{ position: "relative", zIndex: 10 }}>
+          <p style={{ color:"rgba(255,255,255,.3)", fontSize:12, marginBottom:16 }}>© 2025 EMBEGE</p>
+          <button className="btn btn-amber mobile-only-btn" onClick={() => setShowMobileForm(true)}
+            style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 16 }}>
+            Mulai Belajar →
+          </button>
+        </div>
       </div>
 
       {/* Right panel - form */}
-      <div className="auth-right-panel" style={{
+      <div className={`auth-right-panel ${!showMobileForm ? "hidden-on-mobile" : ""}`} style={{
         width: "100%", maxWidth: 480,
         display: "flex", flex: 1, alignItems: "center", justifyContent: "center",
         padding: "40px 32px", margin: "0 auto"
       }}>
         <div className="fade" style={{ width: "100%", maxWidth: 400 }}>
+          {/* Mobile Back Button */}
+          <button className="mobile-only-btn" onClick={() => setShowMobileForm(false)}
+            style={{ background: "none", border: "none", color: "var(--amber)", fontSize: 13, display: "flex", alignItems: "center", gap: 6, marginBottom: 24, cursor: "pointer", padding: 0, fontWeight: 700 }}>
+            ← Kembali ke Info
+          </button>
+
           <div style={{ marginBottom:36 }}>
             <h2 style={{ fontFamily:"var(--serif)", fontSize:28, fontWeight:700, marginBottom:6 }}>
               {isLogin ? "Selamat datang kembali" : "Mulai belajar lebih cerdas"}

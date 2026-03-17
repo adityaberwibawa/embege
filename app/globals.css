@@ -156,15 +156,20 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
 
 /* Auth Layout */
 .auth-left-panel {
-  display: none !important;
-}
-@media (min-width: 768px) {
-  .auth-left-panel {
-    display: flex !important;
-  }
+  display: flex;
 }
 .auth-right-panel {
   flex: 1;
+}
+@media (max-width: 767px) {
+  .hidden-on-mobile {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .mobile-only-btn {
+    display: none !important;
+  }
 }
 
 /* Flashcard flip */
