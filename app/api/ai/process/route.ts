@@ -11,10 +11,11 @@ async function processInBackground(noteId: string, userId: string, fileUrl: stri
   try {
     // 1. Download file from Supabase Storage
     console.log(`[AI] Downloading file...`);
-    const fileRes = await fetch(fileUrl);
-    if (!fileRes.ok) throw new Error("Failed to download file");
-    const buffer = Buffer.from(await fileRes.arrayBuffer());
-    console.log(`[AI] Download selesai (${Date.now() - start}ms)`);
+    const urlParts = fileUrl.split("/storage/v1/object/public/notes/");
+    const filePath = urlParts[1];
+    const { data: fileData, error: fileError } = await supabaseAdmin.storage.from("notes").download(filePath);
+    if (fileError || !fileData) throw new Error("Failed to download: " + fileError?.message);
+    const buffer = Buffer.from(await fileData.arrayBuffer());
 
     // 2. Extract text
     const content = await extractText(buffer, fileType || "txt");
