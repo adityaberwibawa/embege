@@ -146,9 +146,7 @@ export default function CoursePage() {
           </p>
           <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
             ⚠️ PDF harus bisa di-select teksnya (bukan hasil scan/foto). Untuk hasil terbaik gunakan <strong>TXT</strong> atau <strong>DOCX</strong>.
-            PDF scan? Convert dulu via{" "}
-            <a href="https://drive.google.com" target="_blank" style={{ color: "var(--amber)" }}>Google Drive</a>
-            {" "}→ buka dengan Google Docs → File → Download → DOCX. Atau juga bisa via <a href="https://smallpdf.com/pdf-ocr" target="_blank" style={{ color: "var(--amber)" }}>smallpdf.com</a> → OCR online gratis
+            PDF scan? Convert dulu via{" "} <a href="https://smallpdf.com/pdf-ocr" target="_blank" style={{ color: "var(--amber)" }}>smallpdf.com</a> → OCR online gratis
           </p>
         </div>
 
