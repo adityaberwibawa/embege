@@ -57,10 +57,10 @@ export default function Dashboard() {
   const doneNotes  = courses.reduce((s,c)=> s + ((c.notes as any[])?.filter((n:any)=>n.status==="done").length||0), 0);
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh" }}>
+    <div className="app-container">
       <Sidebar courses={courses} />
 
-      <main style={{ flex:1, padding:"32px 36px", overflowY:"auto" }}>
+      <main className="main-content">
         {/* Header */}
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:32 }}>
           <div>
@@ -73,7 +73,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:32 }}>
+        <div className="stats-grid">
           {[
             { label:"Mata Kuliah", value: courses.length, icon:"🗂️" },
             { label:"Total Catatan", value: totalNotes, icon:"📄" },

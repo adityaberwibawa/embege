@@ -112,12 +112,12 @@ export default function CoursePage() {
   };
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh" }}>
+    <div className="app-container">
       <Sidebar courses={courses} activeCourseId={courseId} />
 
-      <main style={{ flex:1, padding:"32px 36px", overflowY:"auto" }}>
+      <main className="main-content">
         {/* Header */}
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:28 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:28, flexWrap:"wrap", gap:16 }}>
           <div>
             <button onClick={()=>router.push("/dashboard")} style={{ background:"none", border:"none", cursor:"pointer", color:"var(--muted)", fontSize:13, marginBottom:8, display:"flex", alignItems:"center", gap:6 }}>
               ← Dashboard

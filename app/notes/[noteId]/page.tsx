@@ -43,10 +43,10 @@ export default function NotePage() {
   const course = courses.find(c=>c.id===note?.course_id);
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh" }}>
+    <div className="app-container">
       <Sidebar courses={courses} activeCourseId={note?.course_id} />
 
-      <main style={{ flex:1, padding:"32px 36px", overflowY:"auto" }}>
+      <main className="main-content">
         {/* Header */}
         <div style={{ marginBottom:28 }}>
           <button onClick={()=>router.push(`/courses/${note?.course_id}`)}
@@ -60,7 +60,7 @@ export default function NotePage() {
         </div>
 
         {/* Tabs */}
-        <div style={{ display:"flex", gap:4, marginBottom:28, background:"var(--surface)", border:"1px solid var(--border)", borderRadius:10, padding:4, width:"fit-content" }}>
+        <div style={{ display:"flex", gap:4, marginBottom:28, background:"var(--surface)", border:"1px solid var(--border)", borderRadius:10, padding:4, flexWrap:"wrap", width:"fit-content", maxWidth:"100%" }}>
           {([["summary","📝 Ringkasan"],["flashcards","🃏 Flashcard"],["raw","📄 Teks Asli"]] as const).map(([t,label])=>(
             <button key={t} onClick={()=>{ setTab(t); setFcIndex(0); }}
               className="btn" style={{

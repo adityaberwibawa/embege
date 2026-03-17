@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { Course } from "@/types";
@@ -6,6 +7,7 @@ import { Course } from "@/types";
 export default function Sidebar({ courses, activeCourseId }: { courses: Course[]; activeCourseId?: string }) {
   const router = useRouter();
   const path = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -14,14 +16,32 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
 
   return (
     <aside className="sidebar">
-      {/* Logo */}
-      <div style={{ paddingBottom: 20, borderBottom: "1px solid rgba(64,138,113,.3)", marginBottom: 12 }}>
-        <h1 style={{ fontFamily: "var(--serif)", fontSize: 20, fontWeight: 700, color: "#fff" }}>
-          EMB<span style={{ color: "#B0E4CC" }}>EGE</span>
-        </h1>
-        <p style={{ fontSize: 11, color: "rgba(176,228,204,.4)", marginTop: 2 }}>AI Lecture Notes</p>
+      {/* Header & Logo */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, borderBottom: "1px solid rgba(64,138,113,.3)", marginBottom: 12 }}>
+        <div>
+          <h1 style={{ fontFamily: "var(--serif)", fontSize: 20, fontWeight: 700, color: "#fff", lineHeight: 1.1 }}>
+            EMB<span style={{ color: "#B0E4CC" }}>EGE</span>
+          </h1>
+          <p style={{ fontSize: 11, color: "rgba(176,228,204,.4)", marginTop: 2 }}>AI Lecture Notes</p>
+        </div>
+        {/* Toggle Button for Mobile Only */}
+        <button 
+          className="mobile-toggle" 
+          onClick={() => setIsOpen(!isOpen)} 
+          style={{ background: "none", border: "none", color: "var(--sage)", fontSize: 24, cursor: "pointer", display: "flex" }}
+        >
+          {isOpen ? "✕" : "☰"}
+        </button>
       </div>
 
+      <style jsx>{`
+        @media (min-width: 768px) {
+          .mobile-toggle { display: none !important; }
+        }
+      `}</style>
+
+      {/* Nav contents */}
+      <div className={isOpen ? "" : "sidebar-collapsed"} style={{ display: "flex", flexDirection: "column", flex: 1, gap: 4 }}>
       {/* Nav */}
       <button className={`sidebar-item ${path === "/dashboard" ? "active" : ""}`} onClick={() => router.push("/dashboard")}>
         <span>🏠</span> Dashboard
@@ -42,12 +62,13 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
         ))}
       </div>
 
-      <div style={{ flex: 1 }} />
+        <div style={{ flex: 1 }} />
 
-      {/* Sign out */}
-      <button className="sidebar-item" onClick={signOut} style={{ marginTop: "auto" }}>
-        <span>↩</span> Keluar
-      </button>
+        {/* Sign out */}
+        <button className="sidebar-item" onClick={signOut} style={{ marginTop: "auto" }}>
+          <span>↩</span> Keluar
+        </button>
+      </div>
     </aside>
   );
 }
