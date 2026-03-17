@@ -69,7 +69,7 @@ export default function AuthPage() {
           ))}
         </div>
         <div style={{ position: "relative", zIndex: 10 }}>
-          <p style={{ color:"rgba(255,255,255,.3)", fontSize:12, marginBottom:16 }}>© 2025 EMBEGE</p>
+          <p style={{ color:"rgba(255,255,255,.3)", fontSize:12, marginBottom:16 }}>© 2026 EMBEGE Kelompok 17</p>
           <button className="btn btn-amber" onClick={() => setShowForm(true)}
             style={{ width: "100%", maxWidth: 320, justifyContent: "center", padding: "14px", fontSize: 16 }}>
             Mulai Belajar →
