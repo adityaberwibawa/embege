@@ -41,7 +41,7 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
       `}</style>
 
       {/* Nav contents */}
-      <div className={isOpen ? "" : "sidebar-collapsed"} style={{ display: "flex", flexDirection: "column", flex: 1, gap: 4 }}>
+      <div className={`sidebar-content ${isOpen ? "" : "sidebar-collapsed"}`}>
       {/* Nav */}
       <button className={`sidebar-item ${path === "/dashboard" ? "active" : ""}`} onClick={() => router.push("/dashboard")}>
         <span>🏠</span> Dashboard

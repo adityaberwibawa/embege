@@ -121,6 +121,12 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   flex-direction: column; 
   gap: 4px;
 }
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
 @media (max-width: 767px) {
   .sidebar-collapsed {
     display: none;
