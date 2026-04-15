@@ -107,7 +107,7 @@ export default function CoursePage() {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-container app-shell-glass">
       <Sidebar courses={courses} activeCourseId={courseId} />
 
       <main className="main-content">

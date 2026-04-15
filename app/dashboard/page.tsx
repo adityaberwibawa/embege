@@ -57,7 +57,7 @@ export default function Dashboard() {
   const doneNotes  = courses.reduce((s,c)=> s + ((c.notes as any[])?.filter((n:any)=>n.status==="done").length||0), 0);
 
   return (
-    <div className="app-container">
+    <div className="app-container app-shell-glass">
       <Sidebar courses={courses} />
 
       <main className="main-content">

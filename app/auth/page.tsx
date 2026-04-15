@@ -59,15 +59,17 @@ export default function AuthPage() {
             <h1 className="auth-logo">
               EMB<span>EGE</span>
             </h1>
-            <p className="auth-tagline">AI Lecture Notes Organizer</p>
+            <p className="auth-tagline">
+              Platform pembelajaran cerdas untuk mengubah catatan kuliah mentah menjadi materi belajar terstruktur dalam hitungan menit.
+            </p>
           </div>
 
           <div className="auth-feature-list">
             {[
-              { emoji: "🗂️", text: "Kelola catatan per mata kuliah dengan rapi." },
-              { emoji: "🤖", text: "Ubah materi mentah menjadi ringkasan AI instan." },
-              { emoji: "🃏", text: "Latihan cepat dengan flashcard otomatis." },
-              { emoji: "📄", text: "Upload PDF, DOCX, TXT, atau PPTX dalam satu tempat." },
+              { emoji: "🗂️", text: "Kelola mata kuliah dan catatan dalam workspace yang rapi serta mudah ditelusuri." },
+              { emoji: "🤖", text: "Dapatkan ringkasan AI terstruktur agar materi panjang lebih cepat dipahami." },
+              { emoji: "🃏", text: "Bangun flashcard otomatis untuk persiapan kuis, UTS, dan UAS lebih efisien." },
+              { emoji: "📄", text: "Dukung file PDF, DOCX, TXT, dan PPTX untuk berbagai jenis materi kuliah." },
             ].map((feature) => (
               <div key={feature.text} className="auth-feature-item">
                 <span>{feature.emoji}</span>
@@ -76,11 +78,25 @@ export default function AuthPage() {
             ))}
           </div>
 
+          <div className="auth-feature-list">
+            {[
+              "1. Upload catatan kuliah",
+              "2. Proses dengan AI",
+              "3. Pelajari ringkasan dan flashcard",
+            ].map((step) => (
+              <div key={step} className="auth-feature-item">
+                <span>✅</span>
+                <p>{step}</p>
+              </div>
+            ))}
+          </div>
+
           <div className="auth-hero-footer">
-            <p>© 2026 EMBEGE Kelompok 17</p>
+            <p>Dirancang untuk mahasiswa yang ingin belajar lebih cepat dan lebih terarah setiap minggu.</p>
             <button className="btn btn-amber auth-hero-cta" onClick={() => setShowForm(true)}>
               Mulai Belajar
             </button>
+            <p>© 2026 EMBEGE Kelompok 17</p>
           </div>
         </section>
 

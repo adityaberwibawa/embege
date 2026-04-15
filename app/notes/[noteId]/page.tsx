@@ -43,7 +43,7 @@ export default function NotePage() {
   const course = courses.find(c=>c.id===note?.course_id);
 
   return (
-    <div className="app-container">
+    <div className="app-container app-shell-glass">
       <Sidebar courses={courses} activeCourseId={note?.course_id} />
 
       <main className="main-content">
