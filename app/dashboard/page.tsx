@@ -62,14 +62,16 @@ export default function Dashboard() {
 
       <main className="main-content">
         {/* Header */}
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:32 }}>
-          <div>
+        <div className="page-header">
+          <div className="page-header-main">
             <p style={{ fontSize:12, color:"var(--muted)", fontWeight:600, letterSpacing:".08em" }}>DASHBOARD</p>
             <h2 style={{ fontFamily:"var(--serif)", fontSize:28, fontWeight:700, marginTop:4 }}>
               Halo, <span style={{ color:"var(--amber)" }}>{profile?.full_name || "Mahasiswa"}</span> 👋
             </h2>
           </div>
-          <button className="btn btn-navy" onClick={()=>setShowAdd(true)}>+ Tambah Mata Kuliah</button>
+          <div className="page-header-actions">
+            <button className="btn btn-navy" onClick={()=>setShowAdd(true)} style={{ justifyContent:"center" }}>+ Tambah Mata Kuliah</button>
+          </div>
         </div>
 
         {/* Stats */}
@@ -90,20 +92,20 @@ export default function Dashboard() {
         </div>
 
         {/* Courses grid */}
-        <h3 style={{ fontFamily:"var(--serif)", fontSize:19, fontWeight:600, marginBottom:16 }}>Mata Kuliahmu</h3>
+        <h3 className="section-title">Mata Kuliahmu</h3>
 
         {loading ? (
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:16 }}>
+          <div className="responsive-grid">
             {[1,2,3].map(i=><div key={i} className="shimmer" style={{ height:130 }} />)}
           </div>
         ) : courses.length===0 ? (
-          <div style={{ textAlign:"center", padding:"60px 0", color:"var(--muted)" }}>
+          <div className="empty-state">
             <p style={{ fontSize:48, marginBottom:12 }}>📚</p>
             <p style={{ fontSize:16, fontWeight:600, marginBottom:4 }}>Belum ada mata kuliah</p>
             <p style={{ fontSize:14 }}>Tambahkan mata kuliah pertamamu!</p>
           </div>
         ) : (
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:16 }}>
+          <div className="responsive-grid">
             {courses.map((c,i) => {
               const notes = (c.notes as any[]) || [];
               const done  = notes.filter(n=>n.status==="done").length;

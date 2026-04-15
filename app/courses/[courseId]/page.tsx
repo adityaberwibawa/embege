@@ -111,23 +111,25 @@ export default function CoursePage() {
       <Sidebar courses={courses} activeCourseId={courseId} />
 
       <main className="main-content">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
-          <div>
+        <div className="page-header">
+          <div className="page-header-main">
             <button onClick={() => router.push("/dashboard")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted)", fontSize: 13, marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
               ← Dashboard
             </button>
-            <h2 style={{ fontFamily: "var(--serif)", fontSize: 26, fontWeight: 700, display: "flex", alignItems: "center", gap: 10 }}>
+            <h2 style={{ fontFamily: "var(--serif)", fontSize: 26, fontWeight: 700, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
               <span style={{ fontSize: 28 }}>{course?.emoji}</span>
               {course?.course_name}
             </h2>
             <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{notes.length} catatan diunggah</p>
           </div>
-          <label style={{ cursor: "pointer" }}>
+          <div className="page-header-actions">
+          <label style={{ cursor: "pointer", width: "100%", maxWidth: 280 }}>
             <input ref={fileRef} type="file" accept={ACCEPTED} onChange={handleUpload} style={{ display: "none" }} />
-            <span className="btn btn-navy" style={{ pointerEvents: "none" }}>
+            <span className="btn btn-navy" style={{ pointerEvents: "none", width: "100%", justifyContent: "center" }}>
               {uploading ? "⏳ Mengunggah..." : "⬆️ Upload Catatan"}
             </span>
           </label>
+          </div>
         </div>
 
         {uploadMsg && (
@@ -151,13 +153,13 @@ export default function CoursePage() {
         </div>
 
         {notes.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "60px 0", color: "var(--muted)" }}>
+          <div className="empty-state">
             <p style={{ fontSize: 48, marginBottom: 12 }}>📄</p>
             <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 4 }}>Belum ada catatan</p>
             <p style={{ fontSize: 14 }}>Upload file catatan kuliah untuk memulai</p>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="stack-list">
             {notes.map((note, i) => (
               <div key={note.id} className="card fade" style={{
                 animationDelay: `${i * .05}s`, opacity: 0,
@@ -185,7 +187,7 @@ export default function CoursePage() {
                   )}
                 </div>
 
-                <div style={{ display: "flex", gap: 8 }}>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", width: "100%", justifyContent: "flex-end" }}>
                   {(note.status === "pending" || note.status === "error") && (
                     <button className="btn btn-amber" onClick={() => processNote(note)}
                       disabled={processing.includes(note.id)}

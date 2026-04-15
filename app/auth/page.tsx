@@ -36,13 +36,13 @@ export default function AuthPage() {
   return (
     <main style={{
       minHeight: "100vh", background: "var(--bg)",
-      display: "flex", flexDirection: "row", alignItems: "stretch",
+      display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "wrap",
     }}>
       {/* Left panel - decorative */}
       <div className="fade" style={{
-        flex: 1, background: "var(--navy)", padding: "60px 48px",
+        flex: 1, minWidth: 280, background: "var(--navy)", padding: "clamp(28px, 5vw, 60px) clamp(20px, 4vw, 48px)",
         display: showForm ? "none" : "flex", flexDirection: "column", justifyContent: "space-between",
-        position: "relative", overflow: "hidden",
+        position: "relative", overflow: "hidden", width: "100%",
       }}>
         <div style={{
           position:"absolute", bottom:-120, right:-120,
@@ -81,9 +81,9 @@ export default function AuthPage() {
       <div style={{
         width: "100%", maxWidth: 480,
         display: !showForm ? "none" : "flex", flex: 1, alignItems: "center", justifyContent: "center",
-        padding: "40px 32px", margin: "0 auto"
+        padding: "clamp(20px, 4vw, 40px) clamp(16px, 4vw, 32px)", margin: "0 auto"
       }}>
-        <div className="fade" style={{ width: "100%", maxWidth: 400 }}>
+        <div className="fade" style={{ width: "100%", maxWidth: 400, minWidth: 0 }}>
           {/* Back Button */}
           <button onClick={() => setShowForm(false)}
             style={{ background: "none", border: "none", color: "var(--amber)", fontSize: 13, display: "flex", alignItems: "center", gap: 6, marginBottom: 24, cursor: "pointer", padding: 0, fontWeight: 700 }}>
@@ -122,6 +122,7 @@ export default function AuthPage() {
               background: msg.includes("Cek") ? "rgba(74,124,89,.1)" : "rgba(192,57,43,.08)",
               color: msg.includes("Cek") ? "var(--sage)" : "var(--red)",
               border:`1px solid ${msg.includes("Cek") ? "rgba(74,124,89,.2)" : "rgba(192,57,43,.2)"}`,
+              maxWidth: "100%",
             }}>{msg}</div>
           )}
 

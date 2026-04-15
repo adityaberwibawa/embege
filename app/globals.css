@@ -20,7 +20,34 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+*::before, *::after { box-sizing: border-box; }
+html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+body * {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+:where(h1, h2, h3, h4, h5, h6, p, span, label, a, li, button) {
+  max-width: 100%;
+}
+pre, code {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+pre {
+  white-space: pre-wrap;
+}
+img, svg, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+}
 ::selection { background: var(--navy2); color: white; }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -39,6 +66,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   padding: 10px 20px; border-radius: 8px;
   font-family: var(--font); font-weight: 600; font-size: 13.5px;
   cursor: pointer; border: none; transition: all .15s ease;
+  max-width: 100%;
+  white-space: normal;
 }
 .btn-navy   { background: var(--navy); color: #fff; }
 .btn-navy:hover   { background: var(--navy2); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(64,138,113,.3); }
@@ -56,6 +85,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 14px; padding: 22px;
   box-shadow: 0 1px 6px rgba(0,0,0,.25);
+  width: 100%;
+  max-width: 100%;
 }
 .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.4); border-color: var(--navy2); }
 
@@ -64,6 +95,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   width: 100%; background: var(--surface2); border: 1.5px solid var(--border);
   border-radius: 8px; padding: 11px 14px; color: var(--text);
   font-family: var(--font); font-size: 14px; outline: none; transition: border-color .2s;
+  max-width: 100%;
 }
 .input:focus { border-color: var(--navy2); background: var(--surface); }
 .input::placeholder { color: var(--muted); }
@@ -103,6 +135,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   flex: 1;
   padding: 24px 16px;
   overflow-y: auto;
+  min-width: 0;
 }
 @media (min-width: 768px) {
   .main-content {
@@ -148,6 +181,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   color: rgba(176,228,204,.55); font-size: 13.5px; font-weight: 500;
   cursor: pointer; border: none; background: none; transition: all .15s;
   font-family: var(--font); text-align: left; width: 100%;
+  max-width: 100%;
 }
 .sidebar-item:hover   { background: rgba(64,138,113,.15); color: rgba(176,228,204,.9); }
 .sidebar-item.active  { background: rgba(64,138,113,.22); color: #B0E4CC; font-weight: 600; border: 1px solid rgba(64,138,113,.3); }
@@ -158,6 +192,73 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); min-
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 32px;
+}
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+.stack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.page-header-main {
+  flex: 1;
+  min-width: 0;
+}
+.page-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.empty-state {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--muted);
+}
+.pill-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  flex-wrap: wrap;
+  width: fit-content;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .page-header-actions {
+    width: auto;
+    justify-content: flex-end;
+  }
+}
+@media (max-width: 767px) {
+  .card {
+    padding: 16px;
+  }
+  .btn {
+    min-height: 40px;
+  }
 }
 
 /* Auth Layout */

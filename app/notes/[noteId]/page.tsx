@@ -48,7 +48,7 @@ export default function NotePage() {
 
       <main className="main-content">
         {/* Header */}
-        <div style={{ marginBottom:28 }}>
+        <div className="page-header-main" style={{ marginBottom:28 }}>
           <button onClick={()=>router.push(`/courses/${note?.course_id}`)}
             style={{ background:"none", border:"none", cursor:"pointer", color:"var(--muted)", fontSize:13, marginBottom:10, display:"flex", alignItems:"center", gap:6 }}>
             ← {course?.course_name}
@@ -60,7 +60,7 @@ export default function NotePage() {
         </div>
 
         {/* Tabs */}
-        <div style={{ display:"flex", gap:4, marginBottom:28, background:"var(--surface)", border:"1px solid var(--border)", borderRadius:10, padding:4, flexWrap:"wrap", width:"fit-content", maxWidth:"100%" }}>
+        <div className="pill-tabs">
           {([["summary","📝 Ringkasan"],["flashcards","🃏 Flashcard"],["raw","📄 Teks Asli"]] as const).map(([t,label])=>(
             <button key={t} onClick={()=>{ setTab(t); setFcIndex(0); }}
               className="btn" style={{
@@ -75,7 +75,7 @@ export default function NotePage() {
         {tab==="summary" && (
           <div className="card fade" style={{ maxWidth:720 }}>
             {note?.summary ? (
-              <div style={{ lineHeight:1.85, fontSize:15 }}
+              <div style={{ lineHeight:1.85, fontSize:15, maxWidth: "100%" }}
                 dangerouslySetInnerHTML={{ __html: note.summary
                   .replace(/## (.+)/g, '<h3 style="font-family:var(--serif);font-size:18px;font-weight:700;margin:20px 0 10px;color:var(--navy)">$1</h3>')
                   .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -96,7 +96,7 @@ export default function NotePage() {
             ) : (
               <>
                 {/* Study mode - single card */}
-                <div style={{ maxWidth:560, marginBottom:32 }}>
+                <div style={{ maxWidth:560, marginBottom:32, width: "100%" }}>
                   <p style={{ fontSize:12, color:"var(--muted)", marginBottom:12, fontWeight:600 }}>
                     KARTU {fcIndex+1} / {flashcards.length} · Klik untuk lihat jawaban
                   </p>
@@ -125,17 +125,17 @@ export default function NotePage() {
                     </div>
                   </div>
 
-                  <div style={{ display:"flex", gap:10, marginTop:16 }}>
+                  <div style={{ display:"flex", gap:10, marginTop:16, flexWrap: "wrap" }}>
                     <button className="btn btn-outline" onClick={()=>{ setFcIndex(i=>Math.max(0,i-1)); setFlipped({}); }}
-                      disabled={fcIndex===0} style={{ flex:1, justifyContent:"center" }}>← Sebelumnya</button>
+                      disabled={fcIndex===0} style={{ flex:1, justifyContent:"center", minWidth: 140 }}>← Sebelumnya</button>
                     <button className="btn btn-navy" onClick={()=>{ setFcIndex(i=>Math.min(flashcards.length-1,i+1)); setFlipped({}); }}
-                      disabled={fcIndex===flashcards.length-1} style={{ flex:1, justifyContent:"center" }}>Berikutnya →</button>
+                      disabled={fcIndex===flashcards.length-1} style={{ flex:1, justifyContent:"center", minWidth: 140 }}>Berikutnya →</button>
                   </div>
                 </div>
 
                 {/* All cards list */}
-                <h4 style={{ fontFamily:"var(--serif)", fontSize:17, fontWeight:600, marginBottom:14 }}>Semua Flashcard</h4>
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:12 }}>
+                <h4 className="section-title" style={{ fontSize:17, marginBottom:14 }}>Semua Flashcard</h4>
+                <div className="responsive-grid" style={{ gap:12 }}>
                   {flashcards.map((fc, i) => (
                     <div key={fc.id} className="card fade" style={{ animationDelay:`${i*.04}s`, opacity:0, cursor:"pointer" }}
                       onClick={()=>toggleFlip(fc.id)}>
