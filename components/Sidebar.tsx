@@ -17,28 +17,21 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
   return (
     <aside className="sidebar">
       {/* Header & Logo */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, borderBottom: "1px solid rgba(64,138,113,.3)", marginBottom: 12 }}>
+      <div className="sidebar-header">
         <div>
-          <h1 style={{ fontFamily: "var(--serif)", fontSize: 20, fontWeight: 700, color: "#fff", lineHeight: 1.1 }}>
+          <h1 className="sidebar-brand-title">
             EMB<span style={{ color: "#B0E4CC" }}>EGE</span>
           </h1>
-          <p style={{ fontSize: 11, color: "rgba(176,228,204,.4)", marginTop: 2 }}>AI Lecture Notes</p>
+          <p className="sidebar-brand-subtitle">AI Lecture Notes</p>
         </div>
         {/* Toggle Button for Mobile Only */}
         <button 
-          className="mobile-toggle" 
+          className="sidebar-mobile-toggle" 
           onClick={() => setIsOpen(!isOpen)} 
-          style={{ background: "none", border: "none", color: "var(--sage)", fontSize: 24, cursor: "pointer", display: "flex" }}
         >
           {isOpen ? "✕" : "☰"}
         </button>
       </div>
-
-      <style jsx>{`
-        @media (min-width: 768px) {
-          .mobile-toggle { display: none !important; }
-        }
-      `}</style>
 
       {/* Nav contents */}
       <div className={`sidebar-content ${isOpen ? "" : "sidebar-collapsed"}`}>
@@ -48,8 +41,8 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
       </button>
 
       {/* Courses */}
-      <div style={{ marginTop: 16, marginBottom: 6 }}>
-        <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(176,228,204,.3)", letterSpacing: ".1em", paddingLeft: 12, marginBottom: 8 }}>
+      <div className="sidebar-section">
+        <p className="sidebar-section-label">
           MATA KULIAH
         </p>
         {courses.map(c => (

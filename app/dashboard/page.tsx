@@ -64,8 +64,8 @@ export default function Dashboard() {
         {/* Header */}
         <div className="page-header">
           <div className="page-header-main">
-            <p style={{ fontSize:12, color:"var(--muted)", fontWeight:600, letterSpacing:".08em" }}>DASHBOARD</p>
-            <h2 style={{ fontFamily:"var(--serif)", fontSize:28, fontWeight:700, marginTop:4 }}>
+            <p className="page-kicker">DASHBOARD</p>
+            <h2 className="page-title">
               Halo, <span style={{ color:"var(--amber)" }}>{profile?.full_name || "Mahasiswa"}</span> 👋
             </h2>
           </div>
@@ -81,11 +81,11 @@ export default function Dashboard() {
             { label:"Total Catatan", value: totalNotes, icon:"📄" },
             { label:"Sudah Diproses AI", value: doneNotes, icon:"✨" },
           ].map(s => (
-            <div key={s.label} className="card fade" style={{ display:"flex", gap:16, alignItems:"center" }}>
-              <span style={{ fontSize:30 }}>{s.icon}</span>
+            <div key={s.label} className="card fade stats-card">
+              <span className="stats-icon">{s.icon}</span>
               <div>
-                <p style={{ fontSize:28, fontWeight:700, fontFamily:"var(--serif)" }}>{s.value}</p>
-                <p style={{ fontSize:13, color:"var(--muted)" }}>{s.label}</p>
+                <p className="stats-value">{s.value}</p>
+                <p className="stats-label">{s.label}</p>
               </div>
             </div>
           ))}
@@ -110,18 +110,17 @@ export default function Dashboard() {
               const notes = (c.notes as any[]) || [];
               const done  = notes.filter(n=>n.status==="done").length;
               return (
-                <div key={c.id} className="card fade" style={{
+                <div key={c.id} className="card fade course-card" style={{
                   animationDelay:`${i*.06}s`, opacity:0, cursor:"pointer",
                   borderTop:`4px solid ${c.color}`, position:"relative",
                 }} onClick={()=>router.push(`/courses/${c.id}`)}>
                   <button onClick={e=>{e.stopPropagation();deleteCourse(c.id);}}
-                    style={{ position:"absolute", top:12, right:12, background:"none", border:"none",
-                      cursor:"pointer", fontSize:14, color:"var(--muted)", opacity:.5 }}>✕</button>
+                    className="course-delete-btn">✕</button>
                   <div style={{ fontSize:32, marginBottom:10 }}>{c.emoji}</div>
                   <h4 style={{ fontFamily:"var(--serif)", fontSize:17, fontWeight:600, marginBottom:6 }}>{c.course_name}</h4>
                   <p style={{ fontSize:13, color:"var(--muted)" }}>{notes.length} catatan · {done} diproses AI</p>
-                  <div style={{ height:3, background:"var(--surface2)", borderRadius:2, marginTop:12, overflow:"hidden" }}>
-                    <div style={{ height:"100%", width:`${notes.length?done/notes.length*100:0}%`, background:c.color, borderRadius:2 }} />
+                  <div className="progress-track">
+                    <div className="progress-fill" style={{ width:`${notes.length?done/notes.length*100:0}%`, background:c.color }} />
                   </div>
                 </div>
               );
@@ -132,33 +131,30 @@ export default function Dashboard() {
 
       {/* Add course modal */}
       {showAdd && (
-        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,.5)", backdropFilter:"blur(6px)",
-          display:"flex", alignItems:"center", justifyContent:"center", zIndex:100, padding:24 }}
+        <div className="modal-overlay"
           onClick={e=>{ if(e.target===e.currentTarget) setShowAdd(false); }}>
-          <div className="card fade" style={{ width:"100%", maxWidth:420 }}>
+          <div className="card fade modal-card">
             <h3 style={{ fontFamily:"var(--serif)", fontSize:20, fontWeight:700, marginBottom:20 }}>Tambah Mata Kuliah</h3>
 
-            <label style={{ fontSize:11, fontWeight:600, color:"var(--muted)", letterSpacing:".08em", display:"block", marginBottom:6 }}>NAMA MATA KULIAH</label>
+            <label className="form-label">NAMA MATA KULIAH</label>
             <input className="input" placeholder="Contoh: Algoritma dan Struktur Data" value={form.course_name}
               onChange={e=>setForm(p=>({...p,course_name:e.target.value}))} style={{ marginBottom:16 }} />
 
-            <label style={{ fontSize:11, fontWeight:600, color:"var(--muted)", letterSpacing:".08em", display:"block", marginBottom:8 }}>EMOJI</label>
+            <label className="form-label">EMOJI</label>
             <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:16 }}>
               {EMOJIS.map(e=>(
-                <button key={e} onClick={()=>setForm(p=>({...p,emoji:e}))} style={{
-                  fontSize:20, background:form.emoji===e?"var(--surface2)":"transparent",
+                <button key={e} onClick={()=>setForm(p=>({...p,emoji:e}))} className="emoji-option" style={{
+                  background:form.emoji===e?"var(--surface2)":"transparent",
                   border:`2px solid ${form.emoji===e?"var(--navy)":"var(--border)"}`,
-                  borderRadius:8, width:38, height:38, cursor:"pointer",
                 }}>{e}</button>
               ))}
             </div>
 
-            <label style={{ fontSize:11, fontWeight:600, color:"var(--muted)", letterSpacing:".08em", display:"block", marginBottom:8 }}>WARNA</label>
+            <label className="form-label">WARNA</label>
             <div style={{ display:"flex", gap:10, marginBottom:22 }}>
               {COLORS.map(c=>(
-                <button key={c} onClick={()=>setForm(p=>({...p,color:c}))} style={{
-                  width:28, height:28, borderRadius:"50%", background:c, border:"none",
-                  cursor:"pointer", outline:form.color===c?"3px solid var(--text)":"none", outlineOffset:2,
+                <button key={c} onClick={()=>setForm(p=>({...p,color:c}))} className="color-option" style={{
+                  background:c, outline:form.color===c?"3px solid var(--text)":"none", outlineOffset:2,
                 }} />
               ))}
             </div>

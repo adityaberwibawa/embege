@@ -113,40 +113,37 @@ export default function CoursePage() {
       <main className="main-content">
         <div className="page-header">
           <div className="page-header-main">
-            <button onClick={() => router.push("/dashboard")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted)", fontSize: 13, marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+            <button onClick={() => router.push("/dashboard")} className="back-link-btn">
               ← Dashboard
             </button>
-            <h2 style={{ fontFamily: "var(--serif)", fontSize: 26, fontWeight: 700, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <h2 className="page-title" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
               <span style={{ fontSize: 28 }}>{course?.emoji}</span>
               {course?.course_name}
             </h2>
-            <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{notes.length} catatan diunggah</p>
+            <p className="page-subtitle">{notes.length} catatan diunggah</p>
           </div>
           <div className="page-header-actions">
-          <label style={{ cursor: "pointer", width: "100%", maxWidth: 280 }}>
-            <input ref={fileRef} type="file" accept={ACCEPTED} onChange={handleUpload} style={{ display: "none" }} />
-            <span className="btn btn-navy" style={{ pointerEvents: "none", width: "100%", justifyContent: "center" }}>
-              {uploading ? "⏳ Mengunggah..." : "⬆️ Upload Catatan"}
-            </span>
-          </label>
+            <label style={{ cursor: "pointer", width: "100%", maxWidth: 280 }}>
+              <input ref={fileRef} type="file" accept={ACCEPTED} onChange={handleUpload} style={{ display: "none" }} />
+              <span className="btn btn-navy" style={{ pointerEvents: "none", width: "100%", justifyContent: "center" }}>
+                {uploading ? "⏳ Mengunggah..." : "⬆️ Upload Catatan"}
+              </span>
+            </label>
           </div>
         </div>
 
         {uploadMsg && (
-          <div style={{
-            padding: "10px 16px", borderRadius: 8, marginBottom: 20, fontSize: 13,
-            background: "rgba(74,124,89,.1)", color: "var(--sage)", border: "1px solid rgba(74,124,89,.2)"
-          }}>
+          <div className="panel-alert success">
             {uploadMsg}
           </div>
         )}
 
         {/* ✅ OPSI C — Peringatan format file */}
-        <div style={{ marginBottom: 16, padding: "10px 14px", background: "rgba(232,144,10,.08)", borderRadius: 8, border: "1px solid rgba(232,144,10,.2)" }}>
-          <p style={{ fontSize: 12, fontWeight: 700, color: "var(--amber)", marginBottom: 4 }}>
+        <div className="panel-alert warn">
+          <p>
             📋 FORMAT YANG DIDUKUNG: PDF · DOCX · TXT · PPTX
           </p>
-          <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
+          <p>
             ⚠️ PDF harus bisa di-select teksnya (bukan hasil scan/foto). Untuk hasil terbaik gunakan <strong>TXT</strong> atau <strong>DOCX</strong>.
             PDF scan? Convert dulu via{" "} <a href="https://smallpdf.com/pdf-ocr" target="_blank" style={{ color: "var(--amber)" }}>smallpdf.com</a> → OCR online gratis
           </p>
@@ -163,21 +160,17 @@ export default function CoursePage() {
             {notes.map((note, i) => (
               <div key={note.id} className="card fade" style={{
                 animationDelay: `${i * .05}s`, opacity: 0,
-                display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
-              }}>
-                <div style={{
-                  width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-                  background: `${course?.color}18`,
-                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
                 }}>
+                <div className="note-row">
+                <div className="file-avatar" style={{ background: `${course?.color}18` }}>
                   {note.file_type === "pdf" ? "📕" : note.file_type === "docx" ? "📘" : note.file_type === "pptx" ? "📊" : "📝"}
                 </div>
 
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>{note.title}</p>
-                  <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                <div className="note-meta">
+                  <p className="note-title">{note.title}</p>
+                  <div className="note-subline">
                     {statusBadge(note.status)}
-                    <span style={{ fontSize: 11, color: "var(--muted)" }}>{note.file_type?.toUpperCase()} · {note.file_name}</span>
+                    <span className="note-file-info">{note.file_type?.toUpperCase()} · {note.file_name}</span>
                   </div>
                   {/* ✅ OPSI B — Pesan error spesifik */}
                   {note.status === "error" && (
@@ -187,7 +180,7 @@ export default function CoursePage() {
                   )}
                 </div>
 
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", width: "100%", justifyContent: "flex-end" }}>
+                <div className="note-actions">
                   {(note.status === "pending" || note.status === "error") && (
                     <button className="btn btn-amber" onClick={() => processNote(note)}
                       disabled={processing.includes(note.id)}
@@ -203,6 +196,7 @@ export default function CoursePage() {
                   )}
                   <button className="btn btn-ghost" onClick={() => deleteNote(note.id)}
                     style={{ padding: "8px 12px", fontSize: 12 }}>✕</button>
+                </div>
                 </div>
               </div>
             ))}

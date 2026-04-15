@@ -49,12 +49,11 @@ export default function NotePage() {
       <main className="main-content">
         {/* Header */}
         <div className="page-header-main" style={{ marginBottom:28 }}>
-          <button onClick={()=>router.push(`/courses/${note?.course_id}`)}
-            style={{ background:"none", border:"none", cursor:"pointer", color:"var(--muted)", fontSize:13, marginBottom:10, display:"flex", alignItems:"center", gap:6 }}>
+          <button onClick={()=>router.push(`/courses/${note?.course_id}`)} className="back-link-btn">
             ← {course?.course_name}
           </button>
-          <h2 style={{ fontFamily:"var(--serif)", fontSize:26, fontWeight:700, marginBottom:4 }}>{note?.title}</h2>
-          <p style={{ fontSize:13, color:"var(--muted)" }}>
+          <h2 className="page-title" style={{ marginTop: 0 }}>{note?.title}</h2>
+          <p className="page-subtitle">
             {note?.file_type?.toUpperCase()} · {flashcards.length} flashcard
           </p>
         </div>
