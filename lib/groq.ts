@@ -1,7 +1,7 @@
 import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const MODEL = "llama-4-scout";
+const MODEL = "llama-3.1-8b-instant";
 
 export async function summarizeNotes(content: string): Promise<string> {
   try {
@@ -52,7 +52,7 @@ Format: [{"question":"...","answer":"..."}]`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      max_tokens: 1000,
+      max_tokens: 600,
     });
     const raw = res.choices[0].message.content || "[]";
     const match = raw.match(/\[[\s\S]*\]/);
