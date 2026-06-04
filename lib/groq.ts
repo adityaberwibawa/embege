@@ -47,7 +47,7 @@ export async function generateFlashcards(
       messages: [
         {
           role: "system",
-          content: `Buat 5 flashcard. Balas HANYA JSON array tanpa teks lain.
+          content: `Buat 10 flashcard. Balas HANYA JSON array tanpa teks lain.
 Format: [{"question":"...","answer":"..."}]`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
