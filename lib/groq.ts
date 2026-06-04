@@ -14,14 +14,14 @@ export async function summarizeNotes(content: string): Promise<string> {
           content: `Kamu adalah asisten akademik. Buat ringkasan terstruktur dalam Bahasa Indonesia.
 Format:
 ## 📌 Ringkasan Utama
-[3-5 kalimat]
+[5-7 kalimat]
 
 ## 🔑 Poin-Poin Kunci
 - [poin 1]
 - [poin 2]
 
 ## 💡 Konsep Penting
-[3-5 konsep]
+[beberapa konsep dengan penjelasan singkat]
 
 ## 📝 Kesimpulan
 [1 paragraf]`,
