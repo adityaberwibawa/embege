@@ -20,7 +20,7 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
       <div className="sidebar-header">
         <div>
           <h1 className="sidebar-brand-title">
-            EMB<span style={{ color: "#B0E4CC" }}>EGE</span>
+            EMB<span style={{ color: "var(--yellow)" }}>EGE</span>
           </h1>
           <p className="sidebar-brand-subtitle">AI Lecture Notes</p>
         </div>

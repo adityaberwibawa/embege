@@ -66,7 +66,7 @@ export default function Dashboard() {
           <div className="page-header-main">
             <p className="page-kicker">DASHBOARD</p>
             <h2 className="page-title">
-              Halo, <span style={{ color:"var(--amber)" }}>{profile?.full_name || "Mahasiswa"}</span> 👋
+              Halo, <span style={{ color:"var(--yellow)" }}>{profile?.full_name || "Mahasiswa"}</span> 👋
             </h2>
           </div>
           <div className="page-header-actions">
@@ -117,7 +117,7 @@ export default function Dashboard() {
                   <button onClick={e=>{e.stopPropagation();deleteCourse(c.id);}}
                     className="course-delete-btn">✕</button>
                   <div style={{ fontSize:32, marginBottom:10 }}>{c.emoji}</div>
-                  <h4 style={{ fontFamily:"var(--serif)", fontSize:17, fontWeight:600, marginBottom:6 }}>{c.course_name}</h4>
+                  <h4 style={{ fontFamily:"Space Grotesk, sans-serif", fontSize:17, fontWeight:700, marginBottom:6, color:"var(--text-light)" }}>{c.course_name}</h4>
                   <p style={{ fontSize:13, color:"var(--muted)" }}>{notes.length} catatan · {done} diproses AI</p>
                   <div className="progress-track">
                     <div className="progress-fill" style={{ width:`${notes.length?done/notes.length*100:0}%`, background:c.color }} />
@@ -134,7 +134,7 @@ export default function Dashboard() {
         <div className="modal-overlay"
           onClick={e=>{ if(e.target===e.currentTarget) setShowAdd(false); }}>
           <div className="card fade modal-card">
-            <h3 style={{ fontFamily:"var(--serif)", fontSize:20, fontWeight:700, marginBottom:20 }}>Tambah Mata Kuliah</h3>
+            <h3 style={{ fontFamily:"Space Grotesk, sans-serif", fontSize:20, fontWeight:700, marginBottom:20, color:"var(--text-light)" }}>Tambah Mata Kuliah</h3>
 
             <label className="form-label">NAMA MATA KULIAH</label>
             <input className="input" placeholder="Contoh: Algoritma dan Struktur Data" value={form.course_name}
@@ -144,8 +144,9 @@ export default function Dashboard() {
             <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:16 }}>
               {EMOJIS.map(e=>(
                 <button key={e} onClick={()=>setForm(p=>({...p,emoji:e}))} className="emoji-option" style={{
-                  background:form.emoji===e?"var(--surface2)":"transparent",
-                  border:`2px solid ${form.emoji===e?"var(--navy)":"var(--border)"}`,
+                  background:form.emoji===e?"#1A1A1A":"transparent",
+                  border:`2px solid ${form.emoji===e?"var(--yellow)":"var(--border-dark)"}`,
+                  display:"inline-flex", alignItems:"center", justifyContent:"center",
                 }}>{e}</button>
               ))}
             </div>
