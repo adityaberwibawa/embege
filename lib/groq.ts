@@ -1,7 +1,7 @@
 import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const MODEL = "gpt-oss-20b";
+const MODEL = "llama-3.1-8b-instant";
 
 export async function summarizeNotes(content: string): Promise<string> {
   try {
