@@ -1,7 +1,7 @@
 import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const MODEL = "llama-3.1-8b-instant";
+const MODEL = "llama-4-scout";
 
 export async function summarizeNotes(content: string): Promise<string> {
   try {
@@ -14,14 +14,14 @@ export async function summarizeNotes(content: string): Promise<string> {
           content: `Kamu adalah asisten akademik. Buat ringkasan terstruktur dalam Bahasa Indonesia.
 Format:
 ## 📌 Ringkasan Utama
-[2-3 kalimat]
+[3-5 kalimat]
 
 ## 🔑 Poin-Poin Kunci
 - [poin 1]
 - [poin 2]
 
 ## 💡 Konsep Penting
-[2-3 konsep]
+[3-5 konsep]
 
 ## 📝 Kesimpulan
 [1 paragraf]`,
@@ -52,7 +52,7 @@ Format: [{"question":"...","answer":"..."}]`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      max_tokens: 600,
+      max_tokens: 1000,
     });
     const raw = res.choices[0].message.content || "[]";
     const match = raw.match(/\[[\s\S]*\]/);
