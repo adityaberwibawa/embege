@@ -1,19 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export async function extractText(buffer: Buffer, fileType: string): Promise<string> {
+export async function extractText(buffer: Buffer, fileType: string, fileUrl?: string): Promise<string> {
   switch (fileType.toLowerCase()) {
     case "txt":
       return buffer.toString("utf-8");
 
     case "pdf": {
-      const raw = buffer.toString("latin1");
-      const matches = raw.match(/\(([^)]{2,200})\)/g) || [];
-      const text = matches
-        .map((m: string) => m.slice(1, -1))
-        .filter((t: string) => /[a-zA-Z]{2,}/.test(t))
-        .join(" ")
-        .replace(/\\n/g, "\n")
-        .replace(/\\/g, "");
-      return text || buffer.toString("utf-8").replace(/[^\x20-\x7E\n]/g, " ");
+      try {
+        const pdfParse = (await import("pdf-parse")).default;
+        const data = await pdfParse(buffer);
+        let text = data.text;
+
+        // Jika teks sangat sedikit (mungkin ini PDF hasil scan gambar)
+        if (text.trim().length < 50 && fileUrl) {
+          console.log("PDF tampaknya hasil scan, mencoba OCR...");
+          const apiKey = process.env.OCR_SPACE_API_KEY || "helloworld";
+          const ocrUrl = `https://api.ocr.space/parse/imageurl?apikey=${apiKey}&url=${encodeURIComponent(fileUrl)}&language=eng&isOverlayRequired=false`;
+          
+          const response = await fetch(ocrUrl);
+          const ocrData = await response.json();
+          
+          if (ocrData && !ocrData.IsErroredOnProcessing && ocrData.ParsedResults) {
+            text = ocrData.ParsedResults.map((r: any) => r.ParsedText).join("\n");
+          }
+        }
+        return text;
+      } catch (err) {
+        console.error("Gagal mengekstrak PDF:", err);
+        return "";
+      }
     }
 
     case "docx": {

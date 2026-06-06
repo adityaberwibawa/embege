@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(await fileData.arrayBuffer());
 
     // Extract text
-    const content = await extractText(buffer, fileType || "txt");
+    const content = await extractText(buffer, fileType || "txt", fileUrl);
     if (!content || content.trim().length < 50) {
       await supabaseAdmin.from("notes").update({ status: "error" }).eq("id", noteId);
       return NextResponse.json({ error: "No content" }, { status: 422 });
