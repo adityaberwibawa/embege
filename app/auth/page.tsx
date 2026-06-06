@@ -128,6 +128,31 @@ export default function AuthPage() {
             </div>
           </div>
 
+          <div className="auth-chat-screenshot-frame" style={{
+            marginTop: "12px",
+            marginBottom: "16px",
+            background: "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+            border: "1px solid var(--border-subtle)",
+            borderRadius: "16px",
+            padding: "16px",
+            position: "relative",
+            zIndex: 1,
+            boxShadow: "0 4px 24px rgba(0,0,0,0.2)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            <div style={{ width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid var(--border-dark)", background: "#0a0a0a", minHeight: "180px", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+              {<img src="/public/testimonibogor.jpeg" alt="Testimoni WhatsApp" style={{ width: "100%", height: "auto", display: "block" }} />}
+              <div style={{ color: "var(--text-muted)", fontSize: "13px", textAlign: "center", padding: "20px" }}>
+                <span style={{ fontSize: "24px", marginBottom: "8px", display: "block" }}>📸</span>
+                Tempat Screenshot Chat WA (Gambar)<br />
+                <span style={{ fontSize: "11px", opacity: 0.7 }}>(Letakkan &lt;img&gt; Anda di sini)</span>
+              </div>
+            </div>
+          </div>
+
           <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
             <p style={{ color: "var(--text-muted)", fontSize: "12px" }}>© 2026 EMBEGE Kelompok 17</p>
           </div>
