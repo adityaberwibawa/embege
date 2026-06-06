@@ -107,20 +107,24 @@ export default function NotePage() {
                       {/* Front */}
                       <div className="flashcard-front card" style={{
                         height: 350, display: "flex", alignItems: "center", justifyContent: "center",
-                        background: "#1A1A1A", border: "1px solid var(--border-dark)", padding: 24, overflowY: "auto"
+                        background: "#1A1A1A", border: "1px solid var(--border-dark)", padding: 24
                       }}>
-                         <p style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 18, color: "var(--text-light)", textAlign: "center", lineHeight: 1.6 }}>
-                          {flashcards[fcIndex].question}
-                        </p>
+                        <div style={{ maxHeight: "100%", width: "100%", overflowY: "auto", padding: "10px 0", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                           <p style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 18, color: "var(--text-light)", textAlign: "center", lineHeight: 1.6, margin: "auto" }}>
+                            {flashcards[fcIndex].question}
+                          </p>
+                        </div>
                       </div>
                       {/* Back */}
                       <div className="flashcard-back card" style={{
                         height: 350, display: "flex", alignItems: "center", justifyContent: "center",
-                        background: `${course?.color || "#e8900a"}18`, padding: 24, overflowY: "auto"
+                        background: `${course?.color || "#e8900a"}18`, padding: 24
                       }}>
-                        <p style={{ fontSize: 15, textAlign: "center", lineHeight: 1.7, color: "var(--text)" }}>
-                          {flashcards[fcIndex].answer}
-                        </p>
+                        <div style={{ maxHeight: "100%", width: "100%", overflowY: "auto", padding: "10px 0", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <p style={{ fontSize: 15, textAlign: "center", lineHeight: 1.7, color: "var(--text)", margin: "auto" }}>
+                            {flashcards[fcIndex].answer}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
