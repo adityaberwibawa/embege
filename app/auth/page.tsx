@@ -91,6 +91,36 @@ export default function AuthPage() {
             ))}
           </div>
 
+          <div className="auth-chat-testimonial" style={{
+            marginTop: "8px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            background: "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+            border: "1px solid var(--border-subtle)",
+            borderRadius: "16px",
+            padding: "16px",
+            position: "relative",
+            zIndex: 1,
+            boxShadow: "0 4px 24px rgba(0,0,0,0.2)"
+          }}>
+            <div style={{ fontSize: "11px", color: "var(--text-muted)", textAlign: "center", fontWeight: 600, letterSpacing: "0.05em", marginBottom: "4px" }}>
+              Hari ini 14:02
+            </div>
+            
+            <div style={{ alignSelf: "flex-end", background: "var(--yellow)", color: "#000", padding: "10px 14px", borderRadius: "14px 14px 2px 14px", fontSize: "13px", maxWidth: "85%", boxShadow: "0 2px 8px rgba(255,214,0,0.15)", fontWeight: 600 }}>
+              Bro, lu nyatet materi kemaren ngga? Minta dong 😭
+            </div>
+            
+            <div style={{ alignSelf: "flex-start", background: "#1A1A1A", color: "var(--text-light)", padding: "10px 14px", borderRadius: "14px 14px 14px 2px", fontSize: "13px", maxWidth: "85%", border: "1px solid var(--border-dark)", boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }}>
+              Aman, gua pake <strong>EMBEGE</strong>. Udah di-summarize sama dibikinin flashcard juga. Nih link-nya tinggal lu pelajarin 🔥
+            </div>
+
+            <div style={{ alignSelf: "flex-end", background: "var(--yellow)", color: "#000", padding: "10px 14px", borderRadius: "14px 14px 2px 14px", fontSize: "13px", maxWidth: "85%", boxShadow: "0 2px 8px rgba(255,214,0,0.15)", fontWeight: 600 }}>
+              Gila mantep bener! Penyelamat UAS banget! 🚀
+            </div>
+          </div>
+
           <div className="auth-hero-footer">
             <p>Dirancang untuk mahasiswa yang ingin belajar lebih cepat dan lebih terarah setiap minggu.</p>
             <button className="btn btn-amber auth-hero-cta" onClick={() => setShowForm(true)}>
