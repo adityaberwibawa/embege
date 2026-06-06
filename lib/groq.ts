@@ -19,7 +19,7 @@ Gambaran umum materi
 Konsep-konsep utama beserta penjelasannya
 Penjelasan singkat setiap subbab/topik penting
 Poin-poin yang wajib diingat
-Ringkasan akhir dalam 5–10 poin
+Ringkasan akhir dalam beberapa poin
 
 Ketentuan:
 
