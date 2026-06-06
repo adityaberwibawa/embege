@@ -14,19 +14,29 @@ export async function extractText(buffer: Buffer, fileType: string, fileUrl?: st
         if (text.trim().length < 50 && fileUrl) {
           console.log("PDF tampaknya hasil scan, mencoba OCR...");
           const apiKey = process.env.OCR_SPACE_API_KEY || "helloworld";
-          const ocrUrl = `https://api.ocr.space/parse/imageurl?apikey=${apiKey}&url=${encodeURIComponent(fileUrl)}&language=eng&isOverlayRequired=false`;
+          const ocrUrl = `https://api.ocr.space/parse/imageurl?apikey=${apiKey}&url=${encodeURIComponent(fileUrl)}&language=eng&isOverlayRequired=false&filetype=pdf`;
           
+          console.log("Memanggil OCR.space dengan URL:", fileUrl);
           const response = await fetch(ocrUrl);
           const ocrData = await response.json();
           
-          if (ocrData && !ocrData.IsErroredOnProcessing && ocrData.ParsedResults) {
+          console.log("OCR.space Response:", JSON.stringify(ocrData));
+          
+          if (ocrData.IsErroredOnProcessing) {
+            const errorMsg = ocrData.ErrorMessage ? ocrData.ErrorMessage.join(", ") : "Unknown OCR error";
+            throw new Error(`OCR Space Error: ${errorMsg}`);
+          }
+          
+          if (ocrData.ParsedResults && ocrData.ParsedResults.length > 0) {
             text = ocrData.ParsedResults.map((r: any) => r.ParsedText).join("\n");
+          } else {
+            throw new Error("OCR Space tidak mengembalikan hasil teks.");
           }
         }
         return text;
-      } catch (err) {
+      } catch (err: any) {
         console.error("Gagal mengekstrak PDF:", err);
-        return "";
+        throw err;
       }
     }
 
