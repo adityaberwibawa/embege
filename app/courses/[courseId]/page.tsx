@@ -143,10 +143,6 @@ export default function CoursePage() {
           <p>
             📋 FORMAT YANG DIDUKUNG: PDF · DOCX · TXT · PPTX
           </p>
-          <p>
-            ⚠️ PDF harus bisa di-select teksnya (bukan hasil scan/foto). Untuk hasil terbaik gunakan <strong>TXT</strong> atau <strong>DOCX</strong>.
-            PDF scan? Convert dulu <a href="https://smallpdf.com/pdf-ocr" target="_blank" style={{ color: "var(--orange)" }}>smallpdf.com</a> → OCR online gratis
-          </p>
         </div>
 
         {notes.length === 0 ? (
