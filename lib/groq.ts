@@ -18,7 +18,6 @@ Struktur:
 Gambaran umum materi
 Konsep-konsep utama beserta penjelasannya
 Penjelasan singkat setiap subbab/topik penting
-Contoh atau ilustrasi sederhana (jika diperlukan)
 Poin-poin yang wajib diingat
 Ringkasan akhir dalam 5–10 poin
 
