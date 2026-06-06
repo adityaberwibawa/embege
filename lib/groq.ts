@@ -11,83 +11,25 @@ export async function summarizeNotes(content: string): Promise<string> {
       messages: [
         {
           role: "system",
-          content: `Buatkan resume lengkap dari file yang saya unggah dengan ketentuan berikut:
+          content: `Buatkan resume materi dari file yang saya unggah dengan tujuan membantu saya memahami materi lebih cepat dan lebih mudah.
 
-Tujuan
+Struktur:
 
-Resume digunakan untuk belajar dan persiapan ujian, sehingga harus fokus pada pemahaman konsep, bukan sekadar ringkasan singkat.
-
-Struktur Resume
-Judul Materi
-
-1. Gambaran Umum Materi
-Jelaskan tujuan pembelajaran materi.
-Jelaskan mengapa materi ini penting dipelajari.
-Hubungkan dengan konteks ilmu komputer/informatika jika relevan.
-
-2. Konsep-Konsep Utama
-
-Untuk setiap konsep yang ada di materi:
-
-Nama Konsep
-Definisi
-Fungsi/Tujuan
-Cara Kerja
-Karakteristik
-Kelebihan
-Kekurangan
-Kapan digunakan
-Contoh sederhana
-
-Gunakan subjudul terpisah untuk setiap konsep.
-
-3. Penjelasan Detail Materi
-
-Jelaskan seluruh isi modul secara runtut dari awal hingga akhir.
+Gambaran umum materi
+Konsep-konsep utama beserta penjelasannya
+Penjelasan singkat setiap subbab/topik penting
+Contoh atau ilustrasi sederhana (jika diperlukan)
+Poin-poin yang wajib diingat
+Ringkasan akhir dalam 5–10 poin
 
 Ketentuan:
 
-Jangan hanya menyalin isi file.
-Jelaskan ulang dengan bahasa Indonesia yang baik dan benar.
-Gunakan istilah teknis yang tepat.
-Hindari perumpamaan yang tidak logis atau berlebihan.
-Jika terdapat proses atau algoritma, jelaskan langkah demi langkah.
-
-4. Struktur Data / Sintaks / Rumus Penting (Jika Ada)
-
-Untuk setiap struktur data, sintaks, atau rumus:
-
-Bentuk umum
-Penjelasan tiap bagian
-Fungsi
-Contoh penggunaan
-Hasil yang diharapkan
-
-5. Analisis Contoh pada Modul
-
-Jika modul memiliki contoh:
-
-Tulis ulang contoh.
-Jelaskan setiap langkahnya.
-Jelaskan mengapa hasil tersebut muncul.
-Jelaskan logika di balik contoh tersebut.
-6. Tabel Ringkasan Materi
-Konsep	Fungsi	Kelebihan	Kekurangan
-
-Isi seluruh konsep penting ke dalam tabel.
-
-7. Poin-Poin yang Sering Keluar di Ujian atau Praktikum
-
-Buat daftar:
-
-Definisi penting
-Perbedaan antar konsep
-Langkah algoritma
-Sintaks yang harus dihafal
-Kesalahan yang sering dilakukan mahasiswa
-8. Ringkasan Super Singkat (1 Halaman)
-
-Buat versi ringkas yang bisa dibaca dalam 3–5 menit sebelum ujian.`,
+Fokus pada pemahaman, bukan sekadar merangkum isi file.
+Gunakan bahasa Indonesia yang sederhana dan jelas.
+Hilangkan detail yang tidak penting atau terlalu teknis.
+Jika ada istilah teknis, jelaskan dengan singkat.
+Jika ada proses atau algoritma, jelaskan alurnya secara sederhana.
+Buat resume yang cukup ringkas untuk dibaca dalam 10–15 menit, tetapi tetap mencakup seluruh konsep penting.`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
