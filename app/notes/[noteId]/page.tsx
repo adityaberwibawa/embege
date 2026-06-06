@@ -101,13 +101,13 @@ export default function NotePage() {
                     KARTU {fcIndex + 1} / {flashcards.length} · Klik untuk lihat jawaban
                   </p>
 
-                  <div className="flashcard-scene" style={{ height: 200 }}
+                  <div className="flashcard-scene" style={{ height: 350 }}
                     onClick={() => toggleFlip(flashcards[fcIndex].id)}>
-                    <div className={`flashcard-card ${flipped[flashcards[fcIndex].id] ? "flipped" : ""}`} style={{ height: 200 }}>
+                    <div className={`flashcard-card ${flipped[flashcards[fcIndex].id] ? "flipped" : ""}`} style={{ height: 350 }}>
                       {/* Front */}
                       <div className="flashcard-front card" style={{
-                        height: 200, display: "flex", alignItems: "center", justifyContent: "center",
-                        background: "#1A1A1A", border: "1px solid var(--border-dark)", padding: 24,
+                        height: 350, display: "flex", alignItems: "center", justifyContent: "center",
+                        background: "#1A1A1A", border: "1px solid var(--border-dark)", padding: 24, overflowY: "auto"
                       }}>
                          <p style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 18, color: "var(--text-light)", textAlign: "center", lineHeight: 1.6 }}>
                           {flashcards[fcIndex].question}
@@ -115,8 +115,8 @@ export default function NotePage() {
                       </div>
                       {/* Back */}
                       <div className="flashcard-back card" style={{
-                        height: 200, display: "flex", alignItems: "center", justifyContent: "center",
-                        background: `${course?.color || "#e8900a"}18`, padding: 24,
+                        height: 350, display: "flex", alignItems: "center", justifyContent: "center",
+                        background: `${course?.color || "#e8900a"}18`, padding: 24, overflowY: "auto"
                       }}>
                         <p style={{ fontSize: 15, textAlign: "center", lineHeight: 1.7, color: "var(--text)" }}>
                           {flashcards[fcIndex].answer}
