@@ -144,10 +144,10 @@ export default function AuthPage() {
             justifyContent: "center"
           }}>
             <div style={{ width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid var(--border-dark)", background: "#0a0a0a", minHeight: "180px", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-              {<img src="/public/testimonibogor.jpeg" alt="Testimoni WhatsApp" style={{ width: "100%", height: "auto", display: "block" }} />}
+              {/* <img src="/public/testimonibogor.jpeg" alt="Testimoni WhatsApp" style={{ width: "100%", height: "auto", display: "block" }} /> */}
               <div style={{ color: "var(--text-muted)", fontSize: "13px", textAlign: "center", padding: "20px" }}>
                 <span style={{ fontSize: "24px", marginBottom: "8px", display: "block" }}>📸</span>
-                Tempat Screenshot Chat WA (Gambar)<br />
+                <img src="/public/testimonibogor.jpeg" alt="Testimoni WhatsApp" style={{ width: "100%", height: "auto", display: "block" }} /><br />
                 <span style={{ fontSize: "11px", opacity: 0.7 }}>(Letakkan &lt;img&gt; Anda di sini)</span>
               </div>
             </div>
