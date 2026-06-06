@@ -59,7 +59,7 @@ export default function Sidebar({ courses, activeCourseId }: { courses: Course[]
 
         {/* Sign out */}
         <button className="sidebar-item" onClick={signOut} style={{ marginTop: "auto" }}>
-          <span>↩</span> Keluar
+          <span>↩</span> Log Out
         </button>
       </div>
     </aside>
