@@ -32,7 +32,7 @@ Buat resume yang cukup ringkas untuk dibaca dalam 10–15 menit, tetapi tetap me
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      max_tokens: 600,
+      max_tokens: 2500,
     });
     return res.choices[0].message.content || "";
   } catch (error) {
@@ -56,7 +56,7 @@ Format: [{"question":"...","answer":"..."}]`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      max_tokens: 600,
+      max_tokens: 1500,
     });
     const raw = res.choices[0].message.content || "[]";
     const match = raw.match(/\[[\s\S]*\]/);
