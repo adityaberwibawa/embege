@@ -143,7 +143,7 @@ export default function AuthPage() {
             alignItems: "center",
             justifyContent: "center"
           }}>
-            <h2 style={{ fontSize: "20px", textAlign: "center", position: "relative", zIndex: 1 }}>Dipakai oleh Mas Bogor dan Teman</h2>
+            <h2 style={{ fontSize: "20px", textAlign: "center", position: "relative", zIndex: 1 }}>Dipakai oleh Mas Bogor</h2>
             <div style={{ width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid var(--border-dark)", background: "#0a0a0a" }}>
               <img src="/testimonibogor.jpeg" alt="Testimoni WhatsApp" style={{ width: "100%", height: "auto", display: "block" }} />
             </div>
