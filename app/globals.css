@@ -44,11 +44,30 @@ body {
     radial-gradient(circle at 10% 10%, rgba(255,214,0,.06), transparent 35%),
     radial-gradient(circle at 90% 90%, rgba(255,107,53,.04), transparent 35%);
   background-attachment: fixed;
+  /* Sharp text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 body * {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
+
+/* Sharp image rendering */
+img, video {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Override for photos (avoid pixelated look on JPEG/PNG) */
+img[src$=".jpg"],
+img[src$=".jpeg"],
+img[src$=".png"],
+img[src$=".webp"] {
+  image-rendering: auto;
+}
+
 :where(h1, h2, h3, h4, h5, h6, p, span, label, a, li, button) {
   max-width: 100%;
   font-family: "Space Grotesk", sans-serif;

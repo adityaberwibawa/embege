@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LandingPage() {
   return (
@@ -119,10 +120,15 @@ export default function LandingPage() {
             <p className="landing-testi-label">📸 Dipakai oleh Mas Bogor</p>
             <p className="landing-testi-sublabel">Rektor UNIGA 2011</p>
             <div className="landing-testi-img-wrap">
-              <img
+              <Image
                 src="/testimonibogor.jpeg"
                 alt="Testimoni WhatsApp dari Mas Bogor"
                 className="landing-testi-img"
+                width={800}
+                height={1200}
+                sizes="(max-width: 700px) 100vw, 50vw"
+                quality={90}
+                style={{ width: "100%", height: "auto" }}
               />
             </div>
           </div>
