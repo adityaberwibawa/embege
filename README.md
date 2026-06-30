@@ -1,4 +1,4 @@
-# Panduan Pengguna — EMBEGE 🚀
+# EMBEGE 🚀
 
 Selamat datang di **EMBEGE**! Platform pembelajaran cerdas yang dirancang khusus untuk membantu mahasiswa mengubah catatan kuliah mentah menjadi ringkasan terstruktur dan flashcard interaktif dalam hitungan menit menggunakan kecerdasan buatan (AI).
 
