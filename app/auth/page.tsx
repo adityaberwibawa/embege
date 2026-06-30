@@ -145,7 +145,7 @@ export default function AuthPage() {
           }}>
             <h2 style={{ fontSize: "20px", textAlign: "center", position: "relative", zIndex: 1 }}>Dipakai oleh Mas Bogor</h2>
             <p>Rektor UNIGA 2011</p>
-            <p></p>
+            <p> </p>
             <div style={{ width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid var(--border-dark)", background: "#0a0a0a" }}>
               <img src="/testimonibogor.jpeg" alt="Testimoni WhatsApp" style={{ width: "100%", height: "auto", display: "block" }} />
             </div>
