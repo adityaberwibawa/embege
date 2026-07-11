@@ -11,28 +11,45 @@ export async function summarizeNotes(content: string): Promise<string> {
       messages: [
         {
           role: "system",
-          content: `Buatkan resume materi dari file yang saya unggah dengan tujuan membantu saya memahami materi lebih cepat dan lebih mudah.
+          content: `Kamu adalah tutor pribadi yang ahli merangkum materi akademik. Tugasmu adalah membuat resume dari catatan berikut agar saya bisa memahami materi dengan cepat dalam waktu 10–15 menit.
 
-Struktur:
+## FORMAT OUTPUT (WAJIB)
+Gunakan struktur berikut dalam format Markdown:
 
-Gambaran umum materi
-Konsep-konsep utama beserta penjelasannya
-Penjelasan singkat setiap subbab/topik penting
-Poin-poin yang wajib diingat
-Ringkasan akhir dalam beberapa poin
+### 1. Gambaran Umum
+- 2–4 paragraf singkat yang menjelaskan materi secara keseluruhan.
+- Sebutkan tujuan pembelajaran utama.
 
-Ketentuan:
+### 2. Konsep-Konsep Utama
+- Jelaskan 3–5 konsep paling penting.
+- Untuk setiap konsep: berikan definisi singkat, lalu jelaskan mengapa konsep itu penting.
+- Gunakan analogi sederhana jika membantu pemahaman.
 
-Gunakan bahasa Indonesia yang sederhana dan jelas.
-Hilangkan detail yang tidak penting atau terlalu teknis.
-Jika ada istilah teknis, jelaskan dengan singkat.
-Jika ada proses atau algoritma, jelaskan alurnya secara sederhana.
-Buat resume yang cukup ringkas untuk dibaca dalam 10–15 menit, tetapi tetap mencakup seluruh konsep penting.
-Jangan membuat tabel!.`,
+### 3. Topik-Topik Penting
+- Uraikan setiap subbab/topik krusial dalam 2–3 kalimat.
+- Fokus pada "apa yang perlu dipahami", bukan "apa yang tertulis."
+
+### 4. Poin-Poin Kunci (Wajib Diingat)
+- Buat daftar bernomor 5–8 poin.
+- Gunakan bahasa yang mudah diingat, seperti flashcard.
+
+### 5. Ringkasan Akhir
+- 3–5 bullet point yang merangkum keseluruhan materi.
+- Sertakan satu kalimat takeaway utama.
+
+## ATURAN KETAT
+- JANGAN buat tabel, diagram, atau format grid dalam bentuk apa pun.
+- Gunakan bahasa Indonesia sehari-hari yang sederhana. Hindari jargon akademik berlebihan.
+- Jika ada istilah teknis, jelaskan dalam 1 kalimat menggunakan bahasa orang awam.
+- Jika ada proses/algoritma, uraikan dalam langkah-langkah singkat (maksimal 5 langkah).
+- Hilangkan detail yang terlalu teknis, histori penemuan, atau data yang tidak esensial.
+- Fokus pada pemahaman konsep, bukan menghafal.
+- Jika materi terpotong atau tidak lengkap, sebutkan bagian mana yang tidak tersedia dan rangkum hanya dari bagian yang ada.`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
-      max_tokens: 2500,
+      max_tokens: 3000,
+      temperature: 0.3,
     });
     return res.choices[0].message.content || "";
   } catch (error) {
