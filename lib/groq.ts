@@ -23,13 +23,12 @@ Ringkasan akhir dalam beberapa poin
 
 Ketentuan:
 
-Fokus pada pemahaman, bukan sekadar merangkum isi file.
 Gunakan bahasa Indonesia yang sederhana dan jelas.
 Hilangkan detail yang tidak penting atau terlalu teknis.
 Jika ada istilah teknis, jelaskan dengan singkat.
 Jika ada proses atau algoritma, jelaskan alurnya secara sederhana.
 Buat resume yang cukup ringkas untuk dibaca dalam 10–15 menit, tetapi tetap mencakup seluruh konsep penting.
-jangan buat tabel.`,
+Jangan membuat tabel!.`,
         },
         { role: "user", content: `Catatan:\n\n${truncated}` },
       ],
