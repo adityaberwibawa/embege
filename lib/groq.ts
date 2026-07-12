@@ -1,7 +1,7 @@
 import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "placeholder" });
-const MODEL = "openai/gpt-oss-20b";
+const MODEL = "qwen/qwen3-32b";
 
 export async function summarizeNotes(content: string): Promise<string> {
   try {
